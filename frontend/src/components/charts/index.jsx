@@ -2,6 +2,8 @@
 
 import { useRef, useEffect } from "react";
 import { Chart } from "chart.js/auto";
+import { Colors } from "chart.js";
+Chart.register(Colors);
 
 export default function Charts() {
   const chartRef = useRef(null);
@@ -21,8 +23,14 @@ export default function Charts() {
             {
               label: "Info",
               data: [34, 64, 23, 15, 15],
-              backgroundColor: ["blue", "pink", "yellow", "teal", "orange"],
-              borderColor: ["blue", "pink", "yellow", "teal", "orange"],
+              backgroundColor: [
+                // "rgba(28, 100, 242, 1)",
+                // "rgba(231, 70, 148, 1)",
+                // "rgba(253, 186, 140, 1)",
+                // "rgba(22, 189, 202, 1)",
+                // "rgba(242, 144, 28, 1)",
+              ],
+              // borderColor: ["blue", "pink", "yellow", "teal", "orange"],
               borderWidth: 1,
               hoverOffset: 4,
             },
@@ -38,6 +46,11 @@ export default function Charts() {
           //     beginAtZero: true,
           //   },
           // },
+          plugins: {
+            colors: {
+              forceOverride: true,
+            },
+          },
         },
       });
 

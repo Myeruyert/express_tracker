@@ -1,6 +1,6 @@
 import React from "react";
 
-const Loader = () => {
+const Loading = () => {
   return (
     <div className="w-screen h-screen flex flex-col bg-white justify-center items-center">
       <div>
@@ -15,4 +15,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default Loading;

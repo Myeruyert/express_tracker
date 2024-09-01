@@ -12,7 +12,7 @@ const Header = () => {
         <a className="btn btn-sm btn-ghost text-base text-slate-900">Records</a>
       </div>
       <div className="flex-none gap-2">
-        <button className="btn btn-sm rounded-3xl bg-[#0166FF] text-base text-white font-normal">
+        <button className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal">
           <FiPlus className="text-2xl" />
           <span>Record</span>
         </button>
