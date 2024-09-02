@@ -4,22 +4,27 @@ import Link from "next/link";
 
 const SignUp = () => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rePassword, setRePassword] = useState("");
   const handleSignUp = async () => {
-    // if (password === repassword) {
-    const res = await fetch("http://localhost:8008/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: name,
-        email: "name@gmail.com",
-        password: "abcd1234",
-        profile_img: "https://img.daisyui.com/images/profile/demo/2@94.webp",
-      }),
-    });
-    console.log("res", res);
-    // }
+    if (password === rePassword) {
+      const res = await fetch("http://localhost:8008/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          email: email,
+          password: password,
+          profile_img: "https://img.daisyui.com/images/profile/demo/2@94.webp",
+        }),
+      });
+      console.log("res", res);
+    } else {
+      console.log("password doesn't match");
+    }
   };
   // console.log("name", name);
   return (
@@ -45,21 +50,29 @@ const SignUp = () => {
           type="email"
           placeholder="Email"
           className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6] my-4"
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
         />
         <input
           type="password"
           placeholder="Password"
           className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6]"
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         />
         <input
           type="password"
           placeholder="Re-password"
           className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6] my-4"
+          onChange={(e) => {
+            setRePassword(e.target.value);
+          }}
         />
         <button
           className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-          onClick={handleSignUp}
-        >
+          onClick={handleSignUp}>
           Sign up
         </button>
       </div>
