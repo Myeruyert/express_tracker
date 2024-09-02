@@ -1,4 +1,4 @@
-import Charts from "@/components/charts";
+// import Charts from "@/components/charts";
 import IncomeExpenceCard from "@/components/dashboard-cards";
 import DashboardCashCard from "@/components/dashboard-cards/cashcard";
 import Header from "@/components/header/header";
@@ -44,8 +44,8 @@ const Dashboard = () => {
       </div>
       <div className="w-[88%] m-auto">
         <div className="flex gap-6">
-          <Charts />
-          <Charts />
+          {/* <Charts />
+          <Charts /> */}
         </div>
 
         <RecordTable />

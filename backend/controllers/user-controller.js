@@ -19,6 +19,7 @@ const createUser = async (req, res) => {
     console.log("data", data);
     res.status(200).json({ message: "Created succeessfully", user: data });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "Couldn't created new user" });
   }
 };
@@ -30,7 +31,7 @@ const deleteUser = async (req, res) => {
     console.log("data", data);
     res.status(200).json({ message: "deleted successfully", user: data });
   } catch (error) {
-    res.status(400).json({ message: "Not found user id" }); 
+    res.status(400).json({ message: "Not found user id" });
   }
 };
 
@@ -43,7 +44,6 @@ const updateUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: "Not found user id" });
   }
-
 };
 
 module.exports = { getAllUser, createUser, updateUser, deleteUser };
