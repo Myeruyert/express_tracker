@@ -1,6 +1,6 @@
-import Header from "@/components/header/header";
-import Aside from "@/components/record/aside";
-import RecordHistories from "@/components/record/recordHistory";
+import Header from "@/app/components/header/header";
+import Aside from "@/app/components/record/aside";
+import RecordHistories from "@/app/components/record/recordHistory";
 import React from "react";
 
 const RecordPage = () => {

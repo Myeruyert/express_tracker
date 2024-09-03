@@ -1,5 +1,5 @@
 import React from "react";
-import TableRow from "@/components/tables/tableRow";
+import TableRow from "@/app/components/tables/tableRow";
 
 const RecordHistory = ({ title }) => {
   return (

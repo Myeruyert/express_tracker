@@ -1,8 +1,8 @@
 // import Charts from "@/components/charts";
-import IncomeExpenceCard from "@/components/dashboard-cards";
-import DashboardCashCard from "@/components/dashboard-cards/cashcard";
-import Header from "@/components/header/header";
-import RecordTable from "@/components/tables";
+import IncomeExpenceCard from "@/app/components/dashboard-cards";
+import DashboardCashCard from "@/app/components/dashboard-cards/cashcard";
+import Header from "@/app/components/header/header";
+import RecordTable from "@/app/components/tables";
 import React from "react";
 import { FaCircleArrowUp } from "react-icons/fa6";
 import { FaCircleArrowDown } from "react-icons/fa6";
