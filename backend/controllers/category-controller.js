@@ -5,7 +5,7 @@ const getAllCategory = async (req, res) => {
     const data = await sql`SELECT c.name, c.description, c.category_image, 
 r.amount, r.transaction_type, r.description, r.name as "record" 
 FROM categories c INNER JOIN records r ON r.cid=c.id; `;
-    console.log("data", data);
+    console.log("user", data);
     res.status(200).json({ message: "Succeed", category: data });
   } catch (error) {
     res.status(400).json({ message: "Not found user" });
@@ -40,7 +40,8 @@ const deleteCategory = async (req, res) => {
 const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    const data = await sql`UPDATE categories SET name = 'food & drinks' WHERE id=${id}`;
+    const data =
+      await sql`UPDATE categories SET name = 'food & drinks' WHERE id=${id}`;
     console.log("data", data);
     res.status(200).json({ message: "updated successfully", category: data });
   } catch (error) {

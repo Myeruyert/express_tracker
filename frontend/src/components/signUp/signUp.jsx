@@ -1,12 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const router = useRouter();
+
   const handleSignUp = async () => {
     if (password === rePassword) {
       const res = await fetch("http://localhost:8008/auth/signup", {
@@ -22,8 +26,11 @@ const SignUp = () => {
         }),
       });
       console.log("res", res);
+      toast.success("Created successfully");
+      router.push("/login");
     } else {
       console.log("password doesn't match");
+      toast.error("Password doesn't match");
     }
   };
   // console.log("name", name);
@@ -72,7 +79,8 @@ const SignUp = () => {
         />
         <button
           className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-          onClick={handleSignUp}>
+          onClick={handleSignUp}
+        >
           Sign up
         </button>
       </div>

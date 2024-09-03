@@ -15,7 +15,7 @@ const signUp = async (req, res) => {
       .json({ message: "New user is registered succeessfully", user: data });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "Couldn't created new user" });
+    res.status(400).json({ message: "Couldn't registered new user" });
   }
 };
 
