@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { apiUrl } from "@/utils/util";
 
 export default function SignUp() {
+  const [isLoading, setIsLoading] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,6 +21,7 @@ export default function SignUp() {
     }
 
     try {
+      setIsLoading(true);
       const res = await fetch(`${apiUrl}/auth/signup`, {
         method: "POST",
         headers: {
@@ -35,11 +37,13 @@ export default function SignUp() {
       if (res.status === 201) {
         console.log("res", res);
         toast.success("User signed up successfully");
+        setIsLoading(false);
         router.push("/login");
       }
     } catch (error) {
       // res.status(400).json({ message: "Failed to sign up. Please try again." });
       console.error("There was an error signing up:", error);
+      setIsLoading(false);
       toast.error("Failed to sign up. Please try again.");
     }
   };
@@ -93,8 +97,16 @@ export default function SignUp() {
               />
               <button
                 className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-                onClick={handleSignUp}>
-                Sign up
+                onClick={handleSignUp}
+              >
+                {isLoading ? (
+                  <>
+                    <span className="loading loading-spinner"></span> Бүртгэж
+                    байна...
+                  </>
+                ) : (
+                  "Бүртгүүлэх"
+                )}
               </button>
             </div>
             <div className="text-center text-base">

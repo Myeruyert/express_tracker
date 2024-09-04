@@ -13,9 +13,10 @@ const auth = (req, res, next) => {
   if (!req.headers.authorization) {
     res.status(401).json({ message: "Please sign In first" });
   }
+
   const token = req.headers.authorization.split(" ")[1];
   const user = jwt.verify(token, "JST_TOKEN_PASS@123"); //user dotor {id: uuid} orson bga
-  req.user = user;
+  req.user = user; // {id : ""}
   next();
 };
 

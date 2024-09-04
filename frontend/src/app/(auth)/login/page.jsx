@@ -5,14 +5,17 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { apiUrl } from "@/utils/util";
+import Loading from "@/app/components/loading/loading";
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
 
   const handleSignIn = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.post(`${apiUrl}/auth/signin`, {
         email,
         password,
@@ -22,14 +25,18 @@ export default function Login() {
         toast.success("User signed in successfully");
         const { token } = res.data;
         localStorage.setItem("token", token);
+        setIsLoading(false);
         router.push("/dashboard");
       }
       console.log("res", res);
     } catch (error) {
       console.error("There was an error signing in:", error);
+      setIsLoading(false);
       toast.error("Failed to sign in. Please try again.");
     }
   };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex h-screen">
@@ -64,7 +71,8 @@ export default function Login() {
               />
               <button
                 className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-                onClick={handleSignIn}>
+                onClick={handleSignIn}
+              >
                 Log In
               </button>
             </div>

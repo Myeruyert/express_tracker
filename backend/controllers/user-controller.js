@@ -1,5 +1,15 @@
 const sql = require("../config/db");
 
+const getCurrentUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const [data] = await sql`SELECT * FROM users WHERE id=${id}`;
+    res.status(200).json({ message: "success", user: data });
+  } catch (error) {
+    res.status(400).json({ message: "Error" });
+  }
+};
+
 const getAllUser = async (req, res) => {
   try {
     const data = await sql`SELECT * FROM users`;
@@ -46,4 +56,10 @@ const updateUser = async (req, res) => {
   }
 };
 
-module.exports = { getAllUser, createUser, updateUser, deleteUser };
+module.exports = {
+  getCurrentUser,
+  getAllUser,
+  createUser,
+  updateUser,
+  deleteUser,
+};

@@ -1,15 +1,27 @@
-import React from "react";
+"use client";
+import Link from "next/link";
+import React, { useContext } from "react";
 import { FiPlus } from "react-icons/fi";
+import { UserContext } from "../context/user-context";
 
-const Header = () => {
+const Header = ({ logOut }) => {
+  const { user } = useContext(UserContext);
   return (
-    <div className="navbar bg-white m-auto mb-8">
+    <div className="navbar bg-white m-auto">
       <div className="flex-1">
         <img src="\images\gred-logo.png" alt="" />
-        <a className="btn btn-sm btn-ghost text-base text-slate-900 font-semibold">
+        <Link
+          href="/dashboard"
+          className="btn btn-sm btn-ghost text-base text-slate-900 font-semibold"
+        >
           Dashboard
-        </a>
-        <a className="btn btn-sm btn-ghost text-base text-slate-900">Records</a>
+        </Link>
+        <Link
+          href="/record"
+          className="btn btn-sm btn-ghost text-base text-slate-900"
+        >
+          Records
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <button className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal">
@@ -20,7 +32,8 @@ const Header = () => {
           <div
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar">
+            className="btn btn-ghost btn-circle avatar"
+          >
             <div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
@@ -30,10 +43,11 @@ const Header = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+          >
             <li>
               <a className="justify-between">
-                Profile
+                {user.name}
                 <span className="badge">New</span>
               </a>
             </li>
@@ -41,7 +55,9 @@ const Header = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button className="btn btn-sm" onClick={logOut}>
+                Log out
+              </button>
             </li>
           </ul>
         </div>

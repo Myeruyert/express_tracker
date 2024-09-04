@@ -17,12 +17,12 @@ const IncomeExpenceCard = ({
         </span>
       </div>
       <div className="stat">
-        <div className="stat-value">{sumAmount}</div>
+        <div className="stat-value text-black">{sumAmount}</div>
         <p className="text-slate-500 mt-1">{incomeAmount}</p>
 
         <div className="flex items-center gap-2 mt-4">
           <span>{arrow}</span>
-          <span>{change}</span>
+          <span className="text-black">{change}</span>
         </div>
       </div>
     </div>
