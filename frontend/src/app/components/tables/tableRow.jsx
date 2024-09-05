@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../context/user-context";
 
-const TableRow = () => {
+const TableRow = ({ record }) => {
+  // const { user } = useContext(UserContext);
   return (
     <>
       <td>
@@ -14,12 +16,14 @@ const TableRow = () => {
             </div>
           </div>
           <div className="text-base text-black">
-            <div className="">Lending & Renting</div>
+            <div className="">{record.category_name}</div>
             <div className="text-xs text-gray-500">3 hours ago</div>
           </div>
         </div>
       </td>
-      <td className="text-lime-500 text-semibold text-base">- 1,000₮</td>
+      <td className="text-lime-500 text-semibold text-base">
+        {record.amount}₮
+      </td>
     </>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import TableRow from "./tableRow";
 
-const RecordTable = () => {
+const RecordTable = ({ transactionData }) => {
   return (
     <div className="stats text-primary-content bg-white flex flex-col mt-6">
       <div className="overflow-x-auto divide-slate-100">
@@ -14,9 +14,11 @@ const RecordTable = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="flex items-center justify-between border-t-[1.5px] border-b-0 border-slate-300">
-              <TableRow />
-            </tr>
+            {transactionData?.map((record) => (
+              <tr className="flex items-center justify-between border-t-[1.5px] border-b-0 border-slate-300">
+                <TableRow record={record} />
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

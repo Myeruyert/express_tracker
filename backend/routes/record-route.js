@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const {
-  getAllRecord,
+  getRecord,
   createRecord,
   updateRecord,
   deleteRecord,
@@ -9,7 +9,8 @@ const {
 const router = Router();
 
 // router.get();
-router.route("/").get(getAllRecord).post(createRecord);
+router.route("/:id").get(getRecord);
+router.route("/").post(createRecord);
 
 router.route("/:id").put(updateRecord).delete(deleteRecord);
 

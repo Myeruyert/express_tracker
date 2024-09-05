@@ -6,6 +6,7 @@ import { UserContext } from "../context/user-context";
 
 const Header = ({ logOut }) => {
   const { user } = useContext(UserContext);
+
   return (
     <div className="navbar bg-white m-auto">
       <div className="flex-1">
@@ -48,7 +49,7 @@ const Header = ({ logOut }) => {
             <li>
               <a className="justify-between">
                 {user.name}
-                <span className="badge">New</span>
+                <span className="badge"></span>
               </a>
             </li>
             <li>
