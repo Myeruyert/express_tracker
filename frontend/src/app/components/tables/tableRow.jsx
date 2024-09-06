@@ -16,13 +16,15 @@ const TableRow = ({ record }) => {
             </div>
           </div>
           <div className="text-base text-black">
-            <div className="">{record.category_name}</div>
-            <div className="text-xs text-gray-500">3 hours ago</div>
+            <div className="">{record?.category_name}</div>
+            <div className="text-xs text-gray-500">
+              3 hours ago
+            </div>
           </div>
         </div>
       </td>
       <td className="text-lime-500 text-semibold text-base">
-        {record.amount}₮
+        {record?.amount}₮
       </td>
     </>
   );

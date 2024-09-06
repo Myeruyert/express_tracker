@@ -13,6 +13,18 @@ const getRecord = async (req, res) => {
   }
 };
 
+const getSumRecord = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data =
+      await sql`SELECT SUM(amount) as "sum amount" FROM records WHERE uid=${id} AND transaction_type='INC`;
+    console.log("data", data);
+    res.status(200).json({ message: "Succeed", record: data });
+  } catch (error) {
+    res.status(400).json({ message: "Not found user" });
+  }
+};
+
 const createRecord = async (req, res) => {
   try {
     const { uid, cid, name, amount, transaction_type, description } = req.body;
@@ -50,4 +62,10 @@ const updateRecord = async (req, res) => {
   }
 };
 
-module.exports = { getRecord, createRecord, updateRecord, deleteRecord };
+module.exports = {
+  getRecord,
+  getSumRecord,
+  createRecord,
+  updateRecord,
+  deleteRecord,
+};

@@ -62,6 +62,32 @@ const Dashboard = () => {
   //   }
   // }, [user.id]);
 
+  const [incSum, setIncSum] = useState({
+    transaction_type: "",
+  });
+
+  const fetchSumData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`${apiUrl}/records/sum`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setIncSum(response.data);
+        console.log("SUM", response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSumData();
+  }, []);
+
   console.log("res.data", transactionData);
 
   return (
