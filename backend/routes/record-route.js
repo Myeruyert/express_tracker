@@ -6,15 +6,13 @@ const {
   updateRecord,
   deleteRecord,
 } = require("../controllers/record-controller");
-const { auth } = require("../middlewares/auth");
+// const { auth } = require("../middlewares/auth");
 
 const router = Router();
 
 // router.get();
-router.route("/:id").get(getRecord);
-router.route("/sum").get(auth, getSumRecord);
+router.route("/sum").get(getSumRecord);
 router.route("/").post(createRecord);
-
-router.route("/:id").put(updateRecord).delete(deleteRecord);
+router.route("/:id").get(getRecord).put(updateRecord).delete(deleteRecord);
 
 module.exports = router;

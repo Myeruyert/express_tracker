@@ -23,12 +23,10 @@ export const metadata = {
 export default function MainLayout({ children }) {
   return (
     <>
-      <UserProvider>
-        <Header
-        // logout={logout}
-        />
-        {children}
-      </UserProvider>
+      <Header
+      // logout={logout}
+      />
+      {children}
     </>
   );
 }

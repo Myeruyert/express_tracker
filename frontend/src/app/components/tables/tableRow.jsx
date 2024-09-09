@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/user-context";
+import { format } from "date-fns";
 
 const TableRow = ({ record }) => {
   // const { user } = useContext(UserContext);
@@ -18,12 +19,16 @@ const TableRow = ({ record }) => {
           <div className="text-base text-black">
             <div className="">{record?.category_name}</div>
             <div className="text-xs text-gray-500">
-              3 hours ago
+              {format(record?.created_at, "yyyy-MM-dd")}
             </div>
           </div>
         </div>
       </td>
-      <td className="text-lime-500 text-semibold text-base">
+      <td
+        className={`${
+          record.transaction_type === "INC" ? "text-lime-500" : "text-red-500"
+        } text-semibold text-base`}
+      >
         {record?.amount}₮
       </td>
     </>

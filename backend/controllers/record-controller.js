@@ -1,10 +1,12 @@
+const { TbChevronsDownLeft } = require("react-icons/tb");
 const sql = require("../config/db");
 
 const getRecord = async (req, res) => {
+  console.log("summ");
   try {
     const { id } = req.params;
     const data =
-      await sql`SELECT r.name, r.amount, r.transaction_type, c.name as category_name
+      await sql`SELECT r.name, r.amount, r.transaction_type, r.created_at, c.name as category_name
     FROM records r INNER JOIN categories c ON r.cid=c.id WHERE r.uid=${id};`;
     console.log("data", data);
     res.status(200).json({ message: "Succeed", record: data });
@@ -14,14 +16,22 @@ const getRecord = async (req, res) => {
 };
 
 const getSumRecord = async (req, res) => {
+  // try {
+  //   const { id } = req.params;
+  //   const data =
+  //     await sql`SELECT SUM(amount) as "sum amount" FROM records WHERE uid=${id} AND transaction_type='INC`;
+  //   console.log("data", data);
+  //   res.status(200).json({ message: "Succeed", record: data });
+  // } catch (error) {
+  //   res.status(400).json({ message: "Not found user" });
+  // }
   try {
-    const { id } = req.params;
-    const data =
-      await sql`SELECT SUM(amount) as "sum amount" FROM records WHERE uid=${id} AND transaction_type='INC`;
-    console.log("data", data);
-    res.status(200).json({ message: "Succeed", record: data });
+    const [income, expense] =
+      await sql`SELECT transaction_type, SUM(amount) FROM records GROUP BY transaction_type`;
+    res.status(200).json({ income, expense });
+    console.log("incme", income);
   } catch (error) {
-    res.status(400).json({ message: "Not found user" });
+    res.status(400).json({ message: "failded", error });
   }
 };
 

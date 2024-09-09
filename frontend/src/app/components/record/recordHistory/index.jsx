@@ -6,7 +6,7 @@ import RecordHistory from "./recordHistory";
 
 const title = [{ title: "Today" }, { title: "Yesterday" }];
 
-const RecordHistories = () => {
+const RecordHistories = ({ transactionData }) => {
   return (
     <div className="text-[#1F2937] w-full">
       <div className="flex items-center justify-between">
@@ -28,7 +28,7 @@ const RecordHistories = () => {
         </select>
       </div>
       {title.map((title) => (
-        <RecordHistory title={title.title} />
+        <RecordHistory title={title.title} transactionData={transactionData} />
       ))}
     </div>
   );

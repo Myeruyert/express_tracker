@@ -1,33 +1,35 @@
 "use client";
 import Charts from "@/app/components/charts";
 import { UserContext } from "@/app/components/context/user-context";
-import IncomeExpenceCard from "@/app/components/dashboard-cards";
+// import IncomeExpenceCard from "@/app/components/dashboard-cards";
 import DashboardCashCard from "@/app/components/dashboard-cards/cashcard";
 import RecordTable from "@/app/components/tables";
 import { apiUrl } from "@/utils/util";
 import React, { useContext, useEffect, useState } from "react";
-import { FaCircleArrowUp } from "react-icons/fa6";
-import { FaCircleArrowDown } from "react-icons/fa6";
+// import { FaCircleArrowUp } from "react-icons/fa6";
+// import { FaCircleArrowDown } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { RecordContext } from "@/app/components/context/userRecord-context";
+import IncomeCard from "@/app/components/dashboard-cards/incomeCard";
+import ExpenceCard from "@/app/components/dashboard-cards/expenseCard";
 
-const CardInfo = [
-  {
-    color: "text-[#84CC16]",
-    sumAmount: "1,400,000₮",
-    incomeAmount: "Your Income Amount",
-    arrow: <FaCircleArrowUp className="text-lime-500" />,
-    change: "32% from last month",
-  },
-  {
-    color: "text-[#0166FF]",
-    sumAmount: "1,400,000₮",
-    incomeAmount: "Your Expence Amount",
-    arrow: <FaCircleArrowDown className="text-[#0166FF]" />,
-    change: "32% from last month",
-  },
-];
+// const CardInfo = [
+//   {
+//     color: "text-[#84CC16]",
+//     sumAmount: "1,400,000₮",
+//     incomeAmount: "Your Income Amount",
+//     arrow: <FaCircleArrowUp className="text-lime-500" />,
+//     change: "32% from last month",
+//   },
+//   {
+//     color: "text-[#0166FF]",
+//     sumAmount: "1,400,000₮",
+//     incomeAmount: "Your Expence Amount",
+//     arrow: <FaCircleArrowDown className="text-[#0166FF]" />,
+//     change: "32% from last month",
+//   },
+// ];
 
 const Dashboard = () => {
   const { transactionData } = useContext(RecordContext);
@@ -62,23 +64,13 @@ const Dashboard = () => {
   //   }
   // }, [user.id]);
 
-  const [incSum, setIncSum] = useState({
-    transaction_type: "",
-  });
+  const [sum, setSum] = useState(null);
 
   const fetchSumData = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get(`${apiUrl}/records/sum`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.status === 200) {
-        setIncSum(response.data);
-        console.log("SUM", response.data);
-      }
+      const response = await axios.get(`${apiUrl}/records/sum`);
+      setSum(response.data);
+      console.log("SUM", response.data);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -88,6 +80,7 @@ const Dashboard = () => {
     fetchSumData();
   }, []);
 
+  console.log("sum", sum);
   console.log("res.data", transactionData);
 
   return (
@@ -95,42 +88,27 @@ const Dashboard = () => {
       <div className="w-[88%] m-auto border-sky-500">
         <div className="flex justify-between">
           <DashboardCashCard />
-          {CardInfo.map((inc) => (
+          {/* {CardInfo.map((inc) => (
             <IncomeExpenceCard
               color={inc.color}
-              sumAmount={inc.sumAmount}
+              sum={sum}
               incomeAmount={inc.incomeAmount}
               arrow={inc.arrow}
               change={inc.change}
             />
-          ))}
+          ))} */}
+          <IncomeCard sum={sum} />
+          <ExpenceCard sum={sum} />
         </div>
       </div>
       <div className="w-[88%] m-auto">
         <div className="flex gap-6">
           <Charts />
         </div>
-        <div></div>
 
         <RecordTable transactionData={transactionData} />
       </div>
     </div>
-    // <div>
-    //   <div>
-    //     <h2>Records</h2>
-    //     {transactionData?.transactions?.map((transaction, index) => {
-    //       return (
-    //         <div key={index} className="flex">
-    //           <img src="/income.svg" alt="income" />
-    //           <div>
-    //             <p className="mb-1">{transaction?.name}</p>
-    //             <p className="text-[#6B7280]">{transaction?.createdat}</p>
-    //           </div>
-    //         </div>
-    //       );
-    //     })}
-    //   </div>
-    // </div>
   );
 };
 export default Dashboard;
