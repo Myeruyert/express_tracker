@@ -1,7 +1,9 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
 const AddRecordModal = ({ isOpen, close }) => {
+  const [activeBtn, setActiveBtn] = useState("INC");
   return (
     <dialog
       open={isOpen}
@@ -19,19 +21,24 @@ const AddRecordModal = ({ isOpen, close }) => {
         <div className="flex gap-5">
           <div className="flex flex-col flex-1">
             <div className="join">
-              <input
-                className=" btn btn-sm rounded-full w-1/2 visited:bg-pink-500"
-                type="radio"
-                name="options"
-                aria-label="Expense"
-                defaultChecked
-              />
-              <input
-                className="btn btn-sm rounded-full w-1/2"
-                type="radio"
-                name="options"
-                aria-label="Income"
-              />
+              <button
+                className={`btn btn-sm rounded-full w-1/2 ${
+                  activeBtn === "EXP"
+                    ? "bg-[#0166FF] text-white"
+                    : "bg-transparent text-black"
+                }`}
+                onClick={() => setActiveBtn("EXP")}>
+                Expense
+              </button>
+              <button
+                className={`btn btn-sm rounded-full w-1/2 ${
+                  activeBtn === "INC"
+                    ? "bg-[#16A34A] text-white"
+                    : "bg-transparent text-black"
+                }`}
+                onClick={() => setActiveBtn("INC")}>
+                Income
+              </button>
             </div>
             Amount
             <input
@@ -64,7 +71,9 @@ const AddRecordModal = ({ isOpen, close }) => {
                 <option>Greedo</option>
               </select>
             </div>
-            <button className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal my-6">
+            <button
+              className={`btn btn-sm rounded-3xl border-0 text-base text-white font-normal my-6
+              ${activeBtn === "EXP" ? "bg-[#0166FF]" : "bg-[#16A34A]"}`}>
               <FiPlus className="text-2xl" />
               <span>Add</span>
             </button>

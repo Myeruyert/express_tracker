@@ -20,7 +20,7 @@ const getBarChartData = async (req, res) => {
       SUM(CASE WHEN r.transaction_type='EXP' THEN r.amount ELSE 0 END) as total_exp
       FROM records r
       GROUP BY DATE_TRUNC('month', r.created_at)
-      ORDER BY DATE_TRUNC('month', r.created_at); `;
+      ORDER BY DATE_TRUNC('month', r.created_at);`;
     console.log("barchart", data);
     res.status(200).json({ message: "success", data });
   } catch (error) {

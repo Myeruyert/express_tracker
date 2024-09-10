@@ -12,6 +12,7 @@ ChartJS.register(Colors, Legend);
 const Charts = () => {
   const [donChartData, setDonChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
+  const [res, setRes] = useState([]);
 
   const donutChartData = async () => {
     try {
@@ -35,9 +36,15 @@ const Charts = () => {
     }
   };
 
+  // const substraction = () => {
+  //   setRes(barChartData.total_inc - barChartData.total_exp);
+  //   console.log("res", res);
+  // };
+
   useEffect(() => {
     donutChartData();
     barChart();
+    // substraction();
   }, []);
   console.log("D.Chart", donChartData);
   console.log("B.Chart", barChartData);
@@ -45,9 +52,13 @@ const Charts = () => {
   return (
     <>
       <div className="stats text-primary-content w-1/2 h-72 bg-white flex flex-col my-6">
+        <div>
+          RES
+          {barChartData?.map((res) => res.total_inc)}
+        </div>
         <div className="stat-title flex gap-2 items-center border-b-2 py-4 px-6">
           <span className="text-slate-900 text-base font-semibold">
-            Income - Expence
+            Income - Expense
           </span>
         </div>
         <div className="stat">
@@ -82,7 +93,7 @@ const Charts = () => {
       <div className="stats text-primary-content w-1/2 h-72 bg-white flex flex-col my-6">
         <div className="stat-title flex gap-2 items-center border-b-2 py-4 px-6">
           <span className="text-slate-900 text-base font-semibold">
-            Income - Expence
+            Income - Expense
           </span>
         </div>
         <div className="stat">
@@ -116,8 +127,6 @@ const Charts = () => {
                     fullSize: true,
                   },
                   // data: {
-                  //   f
-
                   // },
                   colors: {
                     forceOverride: true,
