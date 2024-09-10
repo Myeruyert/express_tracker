@@ -1,6 +1,33 @@
 // const { TbChevronsDownLeft } = require("react-icons/tb");
 const sql = require("../config/db");
 
+const getDonutChartData = async (req, res) => {
+  try {
+    const data =
+      await sql`SELECT c.name AS categoryname, SUM(r.amount) AS sumamount FROM records r INNER JOIN categories c ON r.cid=c.id WHERE r.transaction_type='EXP' GROUP BY(c.name);`;
+    console.log("categories", data);
+    res.status(200).json({ message: "success", data });
+  } catch (error) {
+    res.status(400).json({ message: "Not found user" });
+  }
+};
+
+const getBarChartData = async (req, res) => {
+  try {
+    const data = await sql`SELECT 
+      TO_CHAR(DATE_TRUNC('month', r.created_at), 'Mon') AS month, 
+      SUM(CASE WHEN r.transaction_type='INC' THEN r.amount ELSE 0 END) as total_inc,
+      SUM(CASE WHEN r.transaction_type='EXP' THEN r.amount ELSE 0 END) as total_exp
+      FROM records r
+      GROUP BY DATE_TRUNC('month', r.created_at)
+      ORDER BY DATE_TRUNC('month', r.created_at); `;
+    console.log("barchart", data);
+    res.status(200).json({ message: "success", data });
+  } catch (error) {
+    res.status(400).json({ message: "Not found user" });
+  }
+};
+
 const getRecord = async (req, res) => {
   console.log("summ");
   try {
@@ -16,15 +43,6 @@ const getRecord = async (req, res) => {
 };
 
 const getSumRecord = async (req, res) => {
-  // try {
-  //   const { id } = req.params;
-  //   const data =
-  //     await sql`SELECT SUM(amount) as "sum amount" FROM records WHERE uid=${id} AND transaction_type='INC`;
-  //   console.log("data", data);
-  //   res.status(200).json({ message: "Succeed", record: data });
-  // } catch (error) {
-  //   res.status(400).json({ message: "Not found user" });
-  // }
   try {
     const [income, expense] =
       await sql`SELECT transaction_type, SUM(amount) FROM records GROUP BY transaction_type`;
@@ -74,6 +92,8 @@ const updateRecord = async (req, res) => {
 
 module.exports = {
   getRecord,
+  getDonutChartData,
+  getBarChartData,
   getSumRecord,
   createRecord,
   updateRecord,

@@ -10,7 +10,7 @@ const { auth } = require("../middlewares/auth");
 const router = Router();
 
 // router.get();
-router.route("/").get(auth, getAllCategory).post(auth, createCategory);
+router.route("/:id").get(auth, getAllCategory).post(auth, createCategory);
 
 router.route("/:id").put(updateCategory).delete(deleteCategory);
 

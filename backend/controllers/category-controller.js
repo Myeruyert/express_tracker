@@ -2,9 +2,10 @@ const sql = require("../config/db");
 
 const getAllCategory = async (req, res) => {
   try {
-    const data = await sql`SELECT * FROM categories `;
-    console.log("user", data);
-    res.status(200).json({ message: "Succeed", category: data });
+    const { id } = req.params;
+    const data = await sql`SELECT id, name  FROM categories WHERE r.uid=${id}`;
+    console.log("categories", data);
+    res.status(200).json({ message: "Succeed", data });
   } catch (error) {
     res.status(400).json({ message: "Not found user" });
   }

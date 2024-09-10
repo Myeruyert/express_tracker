@@ -15,13 +15,6 @@ const Aside = () => {
     setIsOpen(false);
     console.log("Show", isOpen);
   };
-  // const show = () => {
-  //   setIsOpenModal(!isOpenModal);
-  //   console.log("modal", isOpenModal);
-  // };
-  // useEffect(() => {
-  //   setIsOpen(true);
-  // }, [isOpen]);
 
   return (
     <aside className="card bg-white w-80 shadow-xl">
@@ -31,15 +24,14 @@ const Aside = () => {
         </h2>
         <button
           className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal my-6"
-          // onClick={() => document.getElementById("my_modal_3").showModal()}
           onClick={() => {
             show();
-          }}>
+          }}
+        >
           <FiPlus className="text-2xl" />
           <span>Add</span>
         </button>
         <AddRecordModal isOpen={isOpen} close={hide} />
-        {/* {isOpenModal && <AddRecordModal />} */}
         <div className="form-control">
           <input
             type="text"
@@ -50,7 +42,8 @@ const Aside = () => {
         <Lists />
         <button
           className="btn btn-sm btn-ghost rounded-full border-0 text-base font-normal justify-start"
-          onClick={() => document.getElementById("my_modal_2").showModal()}>
+          onClick={() => document.getElementById("my_modal_2").showModal()}
+        >
           <FiPlus className="text-2xl text-[#0166FF] text-left" />
           <span className="text-[#1F2937] ">Add Category</span>
         </button>

@@ -1,11 +1,21 @@
 "use client";
 import Link from "next/link";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { UserContext } from "../context/user-context";
+import AddRecordModal from "../modals/addRecord";
 
 const Header = ({ logOut }) => {
   const { user } = useContext(UserContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const show = () => {
+    setIsOpen(true);
+    console.log("Show", isOpen);
+  };
+  const hide = () => {
+    setIsOpen(false);
+    console.log("Show", isOpen);
+  };
 
   return (
     <div className="navbar bg-white m-auto">
@@ -25,10 +35,16 @@ const Header = ({ logOut }) => {
         </Link>
       </div>
       <div className="flex-none gap-2">
-        <button className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal">
+        <button
+          className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal"
+          onClick={() => {
+            show();
+          }}
+        >
           <FiPlus className="text-2xl" />
           <span>Record</span>
         </button>
+        <AddRecordModal isOpen={isOpen} close={hide} />
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
