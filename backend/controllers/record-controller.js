@@ -55,11 +55,19 @@ const getSumRecord = async (req, res) => {
 
 const createRecord = async (req, res) => {
   try {
-    const { uid, cid, name, amount, transaction_type, description } = req.body;
+    const {
+      uid,
+      cid,
+      name,
+      amount,
+      transaction_type,
+      description,
+      created_at,
+    } = req.body;
     const data =
-      await sql`INSERT INTO records(uid, cid, name, amount, transaction_type, description)
+      await sql`INSERT INTO records(uid, cid, name, amount, transaction_type, description, created_at)
       VALUES
-      (${uid}, ${cid}, ${name}, ${amount}, ${transaction_type}, ${description});`;
+      (${uid}, ${cid}, ${name}, ${amount}, ${transaction_type}, ${description}, ${created_at});`;
     console.log("data", data);
     res.status(200).json({ message: "Succeed", record: data });
   } catch (error) {

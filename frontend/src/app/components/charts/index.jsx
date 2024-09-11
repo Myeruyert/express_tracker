@@ -52,10 +52,10 @@ const Charts = () => {
   return (
     <>
       <div className="stats text-primary-content w-1/2 h-72 bg-white flex flex-col my-6">
-        <div>
+        {/* <div>
           RES
           {barChartData?.map((res) => res.total_inc)}
-        </div>
+        </div> */}
         <div className="stat-title flex gap-2 items-center border-b-2 py-4 px-6">
           <span className="text-slate-900 text-base font-semibold">
             Income - Expense
@@ -121,7 +121,7 @@ const Charts = () => {
                   legend: {
                     position: "right",
                     labels: {
-                      boxWidth: 15,
+                      boxWidth: 30,
                       // boxHeight: 10,
                     },
                     fullSize: true,
