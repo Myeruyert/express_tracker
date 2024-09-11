@@ -36,11 +36,6 @@ const Charts = () => {
     }
   };
 
-  // const substraction = () => {
-  //   setRes(barChartData.total_inc - barChartData.total_exp);
-  //   console.log("res", res);
-  // };
-
   useEffect(() => {
     donutChartData();
     barChart();

@@ -7,13 +7,17 @@ import { apiUrl } from "@/utils/util";
 
 export default function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rePassword, setRePassword] = useState("");
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    rePassword: "",
+  });
+
   const router = useRouter();
 
   const handleSignUp = async () => {
+    const { name, email, password, rePassword } = userData;
     if (password !== rePassword) {
       // console.log("password doesn't match");
       toast.error("Password doesn't match");
@@ -66,51 +70,54 @@ export default function SignUp() {
               <input
                 type="text"
                 placeholder="Name"
-                className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6]"
+                className=" input input-sm py-5 input-bordered w-full bg-[#F3F4F6]"
+                value={userData.name}
                 onChange={(e) => {
-                  setName(e.target.value);
+                  setUserData({ ...userData, name: e.target.value });
                 }}
               />
               <input
                 type="email"
                 placeholder="Email"
-                className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6] my-4"
+                className=" input input-sm py-5 input-bordered w-full bg-[#F3F4F6] my-4"
+                value={userData.email}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUserData({ ...userData, email: e.target.value });
                 }}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6]"
+                className=" input input-sm py-5 input-bordered w-full bg-[#F3F4F6]"
+                value={userData.password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setUserData({ ...userData, password: e.target.value });
                 }}
               />
               <input
                 type="password"
                 placeholder="Re-password"
-                className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6] my-4"
+                className=" input input-sm py-5 input-bordered w-full bg-[#F3F4F6] my-4"
+                value={userData.rePassword}
                 onChange={(e) => {
-                  setRePassword(e.target.value);
+                  setUserData({ ...userData, rePassword: e.target.value });
                 }}
               />
               <button
                 className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-                onClick={handleSignUp}
-              >
+                onClick={handleSignUp}>
                 {isLoading ? (
                   <>
-                    <span className="loading loading-spinner"></span> Бүртгэж
-                    байна...
+                    <span className="loading loading-spinner"></span>{" "}
+                    Registering..
                   </>
                 ) : (
-                  "Бүртгүүлэх"
+                  "Register"
                 )}
               </button>
             </div>
             <div className="text-center text-base">
-              <span className="text-slate-900 ">Already have account? </span>
+              <span className="text-slate-900 ">Already have an account? </span>
               <Link href="/login" className="text-[#0166FF]">
                 Log In
               </Link>

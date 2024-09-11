@@ -9,11 +9,14 @@ import Loading from "@/app/components/loading/loading";
 
 export default function Login() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [password, setPassword] = useState("");
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
 
   const handleSignIn = async () => {
+    const { email, password } = userData;
     try {
       setIsLoading(true);
       const res = await axios.post(`${apiUrl}/auth/signin`, {
@@ -56,23 +59,24 @@ export default function Login() {
               <input
                 type="email"
                 placeholder="Email"
-                className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6]"
+                className=" input input-sm py-5 input-bordered w-full bg-[#F3F4F6]"
+                value={userData.email}
                 onChange={(e) => {
-                  setEmail(e.target.value);
+                  setUserData({ ...userData, email: e.target.value });
                 }}
               />
               <input
                 type="password"
                 placeholder="Password"
-                className=" input input-sm py-5 input-bordered w-full max-w-xs bg-[#F3F4F6] my-4"
+                className=" input input-sm py-5 input-bordered w-full bg-[#F3F4F6] my-4"
+                value={userData.password}
                 onChange={(e) => {
-                  setPassword(e.target.value);
+                  setUserData({ ...userData, password: e.target.value });
                 }}
               />
               <button
                 className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-                onClick={handleSignIn}
-              >
+                onClick={handleSignIn}>
                 Log In
               </button>
             </div>

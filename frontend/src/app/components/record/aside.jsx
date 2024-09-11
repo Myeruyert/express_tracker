@@ -4,6 +4,7 @@ import { FiPlus } from "react-icons/fi";
 import Lists from "./lists/lists";
 import { MdOutlineRestaurant } from "react-icons/md";
 import AddRecordModal from "../modals/addRecord";
+import AddCategory from "../modals/addCategory";
 
 const Aside = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +27,7 @@ const Aside = () => {
           className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal my-6"
           onClick={() => {
             show();
-          }}
-        >
+          }}>
           <FiPlus className="text-2xl" />
           <span>Add</span>
         </button>
@@ -42,28 +42,11 @@ const Aside = () => {
         <Lists />
         <button
           className="btn btn-sm btn-ghost rounded-full border-0 text-base font-normal justify-start"
-          onClick={() => document.getElementById("my_modal_2").showModal()}
-        >
+          onClick={() => document.getElementById("my_modal_2").showModal()}>
           <FiPlus className="text-2xl text-[#0166FF] text-left" />
           <span className="text-[#1F2937] ">Add Category</span>
         </button>
-        <dialog id="my_modal_2" className="modal">
-          <div className="modal-box">
-            <button className="btn btn-sm btn-ghost rounded-full border-b-1 text-base font-normal justify-start">
-              <FiPlus className="text-2xl text-[#0166FF] text-left" />
-              <span className="text-[#1F2937] ">Add Category</span>
-            </button>
-            <div className="flex items-center gap-2">
-              <div className="border rounded-full p-2 bg-[teal] text-white">
-                <MdOutlineRestaurant />
-              </div>
-              <span>Food</span>
-            </div>
-          </div>
-          <form method="dialog" className="modal-backdrop">
-            <button>close</button>
-          </form>
-        </dialog>
+        <AddCategory />
       </div>
     </aside>
   );
