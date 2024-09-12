@@ -55,22 +55,16 @@ const getSumRecord = async (req, res) => {
 
 const createRecord = async (req, res) => {
   try {
-    const {
-      uid,
-      cid,
-      name,
-      amount,
-      transaction_type,
-      description,
-      created_at,
-    } = req.body;
+    const { uid, cid, name, amount, transaction_type, description } = req.body;
+    console.log("REC-BODY", req.body);
     const data =
-      await sql`INSERT INTO records(uid, cid, name, amount, transaction_type, description, created_at)
+      await sql`INSERT INTO records(uid, cid, name, amount, transaction_type, description)
       VALUES
-      (${uid}, ${cid}, ${name}, ${amount}, ${transaction_type}, ${description}, ${created_at});`;
+      (${uid}, ${cid}, ${name}, ${amount}, ${transaction_type}, ${description});`;
     console.log("data", data);
     res.status(200).json({ message: "Succeed", record: data });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "Couldn't created new user" });
   }
 };

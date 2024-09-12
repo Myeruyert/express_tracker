@@ -2,9 +2,9 @@ import React from "react";
 import { FiPlus } from "react-icons/fi";
 import { MdOutlineRestaurant } from "react-icons/md";
 
-const AddCategory = () => {
+const AddCategory = ({ isOpenCat, close }) => {
   return (
-    <dialog id="my_modal_2" className="modal">
+    <dialog open={isOpenCat} id="my_modal_2" className="modal">
       <div className="modal-box">
         <button className="btn btn-sm btn-ghost rounded-full border-b-1 text-base font-normal justify-start">
           <FiPlus className="text-2xl text-[#0166FF] text-left" />
@@ -18,7 +18,7 @@ const AddCategory = () => {
         </div>
       </div>
       <form method="dialog" className="modal-backdrop">
-        <button>close</button>
+        <button onClick={close}>close</button>
       </form>
     </dialog>
   );

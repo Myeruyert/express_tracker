@@ -33,6 +33,8 @@ import ExpenceCard from "@/app/components/dashboard-cards/expenseCard";
 
 const Dashboard = () => {
   const { transactionData } = useContext(RecordContext);
+  const { fetchUserData } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
   // const [record, setRecord] = useState({
   //   name: "",
   //   amount: "",
@@ -64,6 +66,10 @@ const Dashboard = () => {
   //   }
   // }, [user.id]);
 
+  useEffect(() => {
+    fetchUserData(setIsLoading);
+  }, []);
+
   const [sum, setSum] = useState(null);
 
   const fetchSumData = async () => {
@@ -87,7 +93,12 @@ const Dashboard = () => {
     <div className="bg-slate-200 pt-8">
       <div className="w-[88%] m-auto border-sky-500">
         <div className="flex justify-between">
-          <DashboardCashCard />
+          {isLoading ? (
+            <div className="skeleton h-56 w-96"></div>
+          ) : (
+            <DashboardCashCard />
+          )}
+          {/* <DashboardCashCard /> */}
           {/* {CardInfo.map((inc) => (
             <IncomeExpenceCard
               color={inc.color}
@@ -97,15 +108,23 @@ const Dashboard = () => {
               change={inc.change}
             />
           ))} */}
-          <IncomeCard sum={sum} />
-          <ExpenceCard sum={sum} />
+          {isLoading ? (
+            <div className="skeleton h-56 w-96"></div>
+          ) : (
+            <IncomeCard sum={sum} />
+          )}
+
+          {isLoading ? (
+            <div className="skeleton h-56 w-96"></div>
+          ) : (
+            <ExpenceCard sum={sum} />
+          )}
         </div>
       </div>
       <div className="w-[88%] m-auto">
         <div className="flex gap-6">
           <Charts />
         </div>
-
         <RecordTable transactionData={transactionData} />
       </div>
     </div>

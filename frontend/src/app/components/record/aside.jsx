@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import Lists from "./lists/lists";
-import { MdOutlineRestaurant } from "react-icons/md";
 import AddRecordModal from "../modals/addRecord";
 import AddCategory from "../modals/addCategory";
 
@@ -17,6 +16,16 @@ const Aside = () => {
     console.log("Show", isOpen);
   };
 
+  const [isOpenCat, setIsOpenCat] = useState(false);
+  const open = () => {
+    setIsOpenCat(true);
+    console.log("Show", isOpenCat);
+  };
+  const close = () => {
+    setIsOpenCat(false);
+    console.log("Show", isOpenCat);
+  };
+
   return (
     <aside className="card bg-white w-80 shadow-xl">
       <div className="card-body">
@@ -27,7 +36,8 @@ const Aside = () => {
           className="btn btn-sm rounded-3xl bg-[#0166FF] border-0 text-base text-white font-normal my-6"
           onClick={() => {
             show();
-          }}>
+          }}
+        >
           <FiPlus className="text-2xl" />
           <span>Add</span>
         </button>
@@ -42,11 +52,14 @@ const Aside = () => {
         <Lists />
         <button
           className="btn btn-sm btn-ghost rounded-full border-0 text-base font-normal justify-start"
-          onClick={() => document.getElementById("my_modal_2").showModal()}>
+          onClick={() => {
+            open();
+          }}
+        >
           <FiPlus className="text-2xl text-[#0166FF] text-left" />
           <span className="text-[#1F2937] ">Add Category</span>
         </button>
-        <AddCategory />
+        <AddCategory isOpenCat={isOpenCat} close={close} />
       </div>
     </aside>
   );

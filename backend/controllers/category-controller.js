@@ -2,14 +2,25 @@ const sql = require("../config/db");
 
 const getAllCategory = async (req, res) => {
   try {
-    const { id } = req.params;
-    const data = await sql`SELECT id, name  FROM categories WHERE r.uid=${id}`;
+    // const { id } = req.params;
+    const data =
+      await sql`SELECT c.name as category_name, c.id FROM categories c`;
     console.log("categories", data);
     res.status(200).json({ message: "Succeed", data });
   } catch (error) {
     res.status(400).json({ message: "Not found user" });
   }
 };
+
+// const getCategory = async (req, res) => {
+//   try {
+//     const data = await sql`SELECT name AS category_name FROM categories`;
+//     console.log("categories", data);
+//     res.status(200).json({ message: "Succeed", data });
+//   } catch (error) {
+//     res.status(400).json({ message: "Not found category" });
+//   }
+// };
 
 const createCategory = async (req, res) => {
   try {
@@ -50,6 +61,7 @@ const updateCategory = async (req, res) => {
 
 module.exports = {
   getAllCategory,
+  // getCategory,
   createCategory,
   updateCategory,
   deleteCategory,

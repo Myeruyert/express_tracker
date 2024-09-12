@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const {
   getAllCategory,
+  // getCategory,
   createCategory,
   updateCategory,
   deleteCategory,
@@ -10,8 +11,8 @@ const { auth } = require("../middlewares/auth");
 const router = Router();
 
 // router.get();
-router.route("/:id").get(auth, getAllCategory).post(auth, createCategory);
-
+router.route("/").get(getAllCategory).post(auth, createCategory);
+// router.route("/").get(getCategory).post(auth, createCategory);
 router.route("/:id").put(updateCategory).delete(deleteCategory);
 
 module.exports = router;

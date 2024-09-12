@@ -1,14 +1,17 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { apiUrl } from "@/utils/util";
 import Loading from "@/app/components/loading/loading";
+import { UserContext } from "@/app/components/context/user-context";
 
 export default function Login() {
   const router = useRouter();
+  const { fetchUserData } = useContext(UserContext);
+  const [isLogged, setIsLogged] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
@@ -40,6 +43,10 @@ export default function Login() {
   };
 
   if (isLoading) return <Loading />;
+
+  // useEffect(() => {
+  //   fetchUserData();
+  // }, [isLogged]);
 
   return (
     <div className="flex h-screen">
@@ -76,7 +83,8 @@ export default function Login() {
               />
               <button
                 className="w-full rounded-[20px] bg-[#0166FF] text-white p-2"
-                onClick={handleSignIn}>
+                onClick={handleSignIn}
+              >
                 Log In
               </button>
             </div>

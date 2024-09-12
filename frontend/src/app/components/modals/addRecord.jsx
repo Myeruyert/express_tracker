@@ -1,37 +1,38 @@
 "use client";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { toast } from "react-toastify";
+// import { CategoryContext } from "../context/category-context";
 
 const AddRecordModal = ({ isOpen, close }) => {
+  // const { categories, getCategory } = useContext(CategoryContext);
+  const [categories, setCategories] = useState(null);
   const [createRecord, setCreateRecord] = useState({
     transaction_type: "",
+    name: "",
+    amount: 0,
+    cid: "",
   });
   const [activeBtn, setActiveBtn] = useState("INC");
-  const [amount, setAmount] = useState("");
-  const [cid, setCid] = useState("");
-  const [createdAt, setCreatedAt] = useState("");
+  const [amount, setAmount] = useState(0);
 
   const addRecord = async () => {
+    const body = {
+      uid: "83fd1817-47de-4dec-ba6c-dc7f68526761",
+      cid: categories[0].id,
+      name: createRecord.name,
+      amount,
+      transaction_type: createRecord.transaction_type,
+      description: "description",
+      // created_at: new Date(createdAt),
+    };
+    console.log("BODY", body);
     try {
-      const res = await fetch(`${apiUrl}/records`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          body: JSON.stringify({
-            amount,
-            // transaction_type,
-            // uid,
-            cid,
-            // description,
-            // created_at: "createdAt",
-          }),
-        },
-      });
-      if (res.status === 201) {
-        console.log("addRecord", res);
+      const res = await axios.post(`${apiUrl}/records`, body);
+      if (res.status === 200) {
+        console.log("addRecord", res.data);
         toast.success("Record added successfully");
       }
     } catch (error) {
@@ -39,13 +40,33 @@ const AddRecordModal = ({ isOpen, close }) => {
       toast.error("Failed to add the record");
     }
   };
+
+  const choiceCat = (ev) => {
+    // setCategories(ev.target.value);
+    console.log("selected id", ev.target.value);
+  };
+
+  const getCategory = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/categories`);
+      setCategories(res.data.data);
+      console.log("RECORD", res.data.data);
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to get categories");
+    }
+  };
+
   console.log(createRecord);
+  console.log(amount);
+  console.log("cid", categories);
+
+  useEffect(() => {
+    getCategory();
+  }, []);
+
   return (
-    <dialog
-      open={isOpen}
-      // id="my_modal_3"
-      className="modal"
-    >
+    <dialog open={isOpen} className="modal">
       <div className="modal-box">
         <form method="dialog">
           <button
@@ -102,19 +123,14 @@ const AddRecordModal = ({ isOpen, close }) => {
             Category
             <select
               className="select select-bordered w-full max-w-xs mb-4"
-              onChange={(e) => {
-                setCid(e.target.value);
-              }}
-              // value={(e) => {
-              //   setCid(e.target.value);
-              // }}
+              onChange={choiceCat}
             >
               <option disabled selected>
                 Choose
               </option>
-              <option>Food & Drinks</option>
-              <option>Rent</option>
-              <option>Financial expenses</option>
+              {categories?.map((c) => (
+                <option value={c.id}>{c.category_name}</option>
+              ))}
             </select>
             <div className="flex gap-2">
               <input
@@ -122,9 +138,9 @@ const AddRecordModal = ({ isOpen, close }) => {
                 type="date"
                 name="Date"
                 placeholder="Date"
-                // onChange={(e) => {
-                //   setCreatedAt(e.target.value);
-                // }}
+                onChange={(e) => {
+                  setCreatedAt(e.target.value);
+                }}
               />
               <input
                 className="input input-bordered w-1/2 max-w-xs"
