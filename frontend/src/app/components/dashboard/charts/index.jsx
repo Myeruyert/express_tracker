@@ -4,7 +4,7 @@ import { useRef, useEffect, useContext, useState } from "react";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut, Pie } from "react-chartjs-2";
 import { Colors, Legend } from "chart.js";
-import { UserContext } from "../context/user-context";
+import { UserContext } from "../../context/user-context";
 import { toast } from "react-toastify";
 import axios from "axios";
 ChartJS.register(Colors, Legend);

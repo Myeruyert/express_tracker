@@ -4,26 +4,23 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import { toast } from "react-toastify";
-// import { CategoryContext } from "../context/category-context";
+import { CategoryContext } from "../context/category-context";
 
 const AddRecordModal = ({ isOpen, close }) => {
-  // const { categories, getCategory } = useContext(CategoryContext);
-  const [categories, setCategories] = useState(null);
+  const { categories, getCategory } = useContext(CategoryContext);
   const [createRecord, setCreateRecord] = useState({
     transaction_type: "",
     name: "",
     amount: 0,
     cid: "",
   });
-  const [activeBtn, setActiveBtn] = useState("INC");
-  const [amount, setAmount] = useState(0);
 
   const addRecord = async () => {
     const body = {
       uid: "83fd1817-47de-4dec-ba6c-dc7f68526761",
-      cid: categories[0].id,
+      cid: categories.id,
       name: createRecord.name,
-      amount,
+      amount: createRecord.amount,
       transaction_type: createRecord.transaction_type,
       description: "description",
       // created_at: new Date(createdAt),
@@ -46,20 +43,8 @@ const AddRecordModal = ({ isOpen, close }) => {
     console.log("selected id", ev.target.value);
   };
 
-  const getCategory = async () => {
-    try {
-      const res = await axios.get(`${apiUrl}/categories`);
-      setCategories(res.data.data);
-      console.log("RECORD", res.data.data);
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to get categories");
-    }
-  };
-
   console.log(createRecord);
-  console.log(amount);
-  console.log("cid", categories);
+  console.log("cid", categories.name);
 
   useEffect(() => {
     getCategory();
@@ -71,8 +56,7 @@ const AddRecordModal = ({ isOpen, close }) => {
         <form method="dialog">
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            onClick={close}
-          >
+            onClick={close}>
             ✕
           </button>
         </form>
@@ -82,32 +66,24 @@ const AddRecordModal = ({ isOpen, close }) => {
             <div className="join">
               <button
                 className={`btn btn-sm rounded-full w-1/2 ${
-                  activeBtn === "EXP"
+                  createRecord.transaction_type === "EXP"
                     ? "bg-[#0166FF] text-white"
                     : "bg-transparent text-black"
                 }`}
                 onClick={() =>
-                  setCreateRecord(
-                    { ...createRecord, transaction_type: "EXP" },
-                    setActiveBtn("EXP")
-                  )
-                }
-              >
+                  setCreateRecord({ ...createRecord, transaction_type: "EXP" })
+                }>
                 Expense
               </button>
               <button
                 className={`btn btn-sm rounded-full w-1/2 ${
-                  activeBtn === "INC"
+                  createRecord.transaction_type === "INC"
                     ? "bg-[#16A34A] text-white"
                     : "bg-transparent text-black"
                 }`}
                 onClick={() =>
-                  setCreateRecord(
-                    { ...createRecord, transaction_type: "INC" },
-                    setActiveBtn("INC")
-                  )
-                }
-              >
+                  setCreateRecord({ ...createRecord, transaction_type: "INC" })
+                }>
                 Income
               </button>
             </div>
@@ -117,14 +93,13 @@ const AddRecordModal = ({ isOpen, close }) => {
               placeholder="Amount"
               className="input input-bordered w-full max-w-xs mb-4"
               onChange={(e) => {
-                setAmount(e.target.value);
+                setCreateRecord({ ...createRecord, amount: e.target.value });
               }}
             />
             Category
             <select
               className="select select-bordered w-full max-w-xs mb-4"
-              onChange={choiceCat}
-            >
+              onChange={choiceCat}>
               <option disabled selected>
                 Choose
               </option>
@@ -151,9 +126,12 @@ const AddRecordModal = ({ isOpen, close }) => {
             </div>
             <button
               className={`btn btn-sm rounded-3xl border-0 text-base text-white font-normal my-6
-              ${activeBtn === "EXP" ? "bg-[#0166FF]" : "bg-[#16A34A]"}`}
-              onClick={addRecord}
-            >
+              ${
+                createRecord.transaction_type === "EXP"
+                  ? "bg-[#0166FF]"
+                  : "bg-[#16A34A]"
+              }`}
+              onClick={addRecord}>
               <FiPlus className="text-2xl" />
               <span>Add</span>
             </button>
@@ -168,8 +146,7 @@ const AddRecordModal = ({ isOpen, close }) => {
             Note
             <textarea
               className="textarea textarea-bordered w-full"
-              placeholder="Write here"
-            ></textarea>
+              placeholder="Write here"></textarea>
           </div>
         </div>
       </div>

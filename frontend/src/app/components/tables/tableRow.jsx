@@ -19,7 +19,7 @@ const TableRow = ({ record }) => {
           <div className="text-base text-black">
             <div className="">{record?.category_name}</div>
             <div className="text-xs text-gray-500">
-              {/* {format(record?.created_at, "yyyy-MM-dd")} */}
+              {/* {format(record?.created_at, "yyyy-MM-DD")} */}
             </div>
           </div>
         </div>
@@ -27,8 +27,7 @@ const TableRow = ({ record }) => {
       <td
         className={`${
           record.transaction_type === "INC" ? "text-lime-500" : "text-red-500"
-        } text-semibold text-base`}
-      >
+        } text-semibold text-base`}>
         {record?.amount}₮
       </td>
     </>

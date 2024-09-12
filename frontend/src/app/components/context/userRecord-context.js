@@ -4,19 +4,24 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { apiUrl } from "@/utils/util";
 import { UserContext } from "./user-context";
+import { toast } from "react-toastify";
 
 export const RecordContext = createContext();
 
 export const RecordProvider = ({ children }) => {
-  // const [record, setRecord] = useState({
-  //   name: "",
-  //   amount: "",
-  //   transaction_type: "",
-  //   category_name: "",
-  // });
-
   const { user } = useContext(UserContext);
   const [transactionData, setTransactionData] = useState([]);
+  const [sum, setSum] = useState(null);
+
+  const fetchSumData = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/records/sum`);
+      setSum(response.data);
+      console.log("SUM", response.data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   const fetchTransaction = async () => {
     try {
@@ -40,7 +45,8 @@ export const RecordProvider = ({ children }) => {
   }, [user.id]);
 
   return (
-    <RecordContext.Provider value={{ transactionData, fetchTransaction }}>
+    <RecordContext.Provider
+      value={{ transactionData, fetchTransaction, sum, fetchSumData }}>
       {children}
     </RecordContext.Provider>
   );

@@ -2,10 +2,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "./components/header/header";
 import { UserProvider } from "./components/context/user-context";
 import { RecordProvider } from "./components/context/userRecord-context";
-import { CategoryContext } from "./components/context/category-context";
+import { CategoryProvider } from "./components/context/category-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +19,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <UserProvider>
           <RecordProvider>
-            {/* <CategoryContext> */}
-            {children}
-            {/* </CategoryContext> */}
+            <CategoryProvider>{children}</CategoryProvider>
             <ToastContainer />
           </RecordProvider>
         </UserProvider>
