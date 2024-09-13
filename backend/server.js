@@ -20,6 +20,10 @@ app.use("/auth", authRoutes);
 app.use("/categories", categoryRoutes);
 app.use("/records", recordRoutes);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to Expense Tracker API");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running at localhost:${PORT}`);
 });

@@ -1,9 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../context/user-context";
 import { format } from "date-fns";
+import { CategoryContext } from "../context/category-context";
 
-const TableRow = ({ record }) => {
+const TableRow = ({ record, transactionData }) => {
   // const { user } = useContext(UserContext);
+  const { searchValue } = useContext(CategoryContext);
+  // const filteredData = transactionData.filter((data) =>
+  //   data?.category_name.toLowerCase().includes(searchValue)
+  // );
+  // console.log("filteredData", filteredData);
   return (
     <>
       <td>
@@ -19,7 +25,7 @@ const TableRow = ({ record }) => {
           <div className="text-base text-black">
             <div className="">{record?.category_name}</div>
             <div className="text-xs text-gray-500">
-              {/* {format(record?.created_at, "yyyy-MM-DD")} */}
+              {format(new Date(record.created_at), "yyyy-MM-dd")}
             </div>
           </div>
         </div>
@@ -27,7 +33,8 @@ const TableRow = ({ record }) => {
       <td
         className={`${
           record.transaction_type === "INC" ? "text-lime-500" : "text-red-500"
-        } text-semibold text-base`}>
+        } text-semibold text-base`}
+      >
         {record?.amount}₮
       </td>
     </>

@@ -1,11 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 import Lists from "./lists/lists";
 import AddRecordModal from "../modals/addRecord";
 import AddCategory from "../modals/addCategory";
+import { CategoryContext } from "../context/category-context";
 
-const Aside = () => {
+const Aside = ({ search }) => {
+  const { setSearchValue } = useContext(CategoryContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const show = () => {
     setIsOpen(true);
@@ -24,6 +27,10 @@ const Aside = () => {
   const close = () => {
     setIsOpenCat(false);
     console.log("Show", isOpenCat);
+  };
+
+  const searchHandleCahnge = (e) => {
+    setSearchValue(e.target.value);
   };
 
   return (
@@ -47,6 +54,8 @@ const Aside = () => {
             type="text"
             placeholder="Search"
             className="input input-bordered w-24 md:w-auto input-sm p-5 text-base bg-slate-100"
+            onChange={searchHandleCahnge}
+            value={search}
           />
         </div>
         <Lists />

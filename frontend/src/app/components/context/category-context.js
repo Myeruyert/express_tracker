@@ -8,6 +8,7 @@ export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState(null);
+  const [searchvalue, setSearchValue] = useState("");
 
   const getCategory = async () => {
     try {
@@ -48,7 +49,14 @@ export const CategoryProvider = ({ children }) => {
 
   return (
     <CategoryContext.Provider
-      value={{ categories, getCategory, setCategories }}>
+      value={{
+        categories,
+        getCategory,
+        setCategories,
+        searchvalue,
+        setSearchValue,
+      }}
+    >
       {children}
     </CategoryContext.Provider>
   );
