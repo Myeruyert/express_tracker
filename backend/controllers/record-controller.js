@@ -34,7 +34,7 @@ const getRecord = async (req, res) => {
     const { id } = req.params;
     const data =
       await sql`SELECT r.name, r.amount, r.transaction_type, r.created_at, c.name as category_name
-    FROM records r INNER JOIN categories c ON r.cid=c.id WHERE r.uid=${id};`;
+    FROM records r INNER JOIN categories c ON r.cid=c.id WHERE r.uid=${id} ORDER BY created_at DESC;`;
     console.log("data", data);
     res.status(200).json({ message: "Succeed", record: data });
   } catch (error) {

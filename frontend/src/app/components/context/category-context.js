@@ -31,6 +31,8 @@ export const CategoryProvider = ({ children }) => {
     getCategory();
   }, []);
 
+  console.log("CAT", categories);
+
   return (
     <CategoryContext.Provider
       value={{

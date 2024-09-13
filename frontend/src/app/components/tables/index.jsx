@@ -2,13 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import TableRow from "./tableRow";
 import TableSkeleton from "../skeleton/tableSkeleton";
 import { UserContext } from "../context/user-context";
+import { RecordContext } from "../context/userRecord-context";
 
-const RecordTable = ({ transactionData }) => {
+const RecordTable = () => {
   const { fetchUserData } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
+  const { transactionData } = useContext(RecordContext);
+
+  const lists = transactionData.slice(0, 5);
   useEffect(() => {
     fetchUserData(setIsLoading);
   }, []);
+  console.log("tablelists", lists);
   return (
     <div className="stats text-primary-content bg-white flex flex-col mt-6">
       <div className="overflow-x-auto divide-slate-100">
@@ -21,7 +26,7 @@ const RecordTable = ({ transactionData }) => {
             </tr>
           </thead>
           <tbody>
-            {transactionData?.map((record) => (
+            {lists?.map((record) => (
               <tr className="flex items-center justify-between border-t-[1.5px] border-b-0 border-slate-300">
                 {isLoading ? <TableSkeleton /> : <TableRow record={record} />}
               </tr>

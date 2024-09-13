@@ -1,30 +1,38 @@
-import React from "react";
+"use client";
+
+import React, { useContext, useState } from "react";
 import CategoryList from "./categoryList";
-
-const typeLists = [{ type: "All" }, { type: "Income" }, { type: "Expence" }];
-
-const categoryLists = [
-  { category: "Food & Drinks" },
-  { category: "Shopping" },
-  { category: "Housing" },
-  { category: "Transportation" },
-  { category: "Vehicle" },
-  { category: "Life & Entertainment" },
-  { category: "Communication, PC" },
-  { category: "Financial expences" },
-  { category: "Investments" },
-  { category: "Income" },
-  { category: "Others" },
-];
+import { CategoryContext } from "../../context/category-context";
+import { GrView } from "react-icons/gr";
 
 const Lists = () => {
+  const { categories, getCategory } = useContext(CategoryContext);
+  // const [selectedBtn, setSelectedBtn] = useState(false);
+  const [selected, setSelected] = useState(true);
+  console.log("Show", selected);
   return (
     <div className="text-[#1F2937]">
       <div className="my-6 text-base">
         <h6 className="mb-4 font-semibold ">Types </h6>
-        {typeLists.map((type1) => (
-          <CategoryList categoryName={type1.type} />
-        ))}
+        <ul className="flex flex-col gap-2 mb-2">
+          <li className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="radio-1"
+              className="radio radio-xs"
+              defaultChecked
+            />
+            <span>All</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <input type="radio" name="radio-1" className="radio radio-xs" />
+            <span>Income</span>
+          </li>
+          <li className="flex items-center gap-2">
+            <input type="radio" name="radio-1" className="radio radio-xs" />
+            <span>Expense</span>
+          </li>
+        </ul>
       </div>
 
       <div className="my-6  text-base">
@@ -34,10 +42,35 @@ const Lists = () => {
         </div>
 
         <ul>
-          {categoryLists.map((cat) => (
-            <CategoryList categoryName={cat.category} />
+          {categories?.map((cat) => (
+            <li>
+              <button
+                // className={`border ${
+                //   selectedBtn ? "font-bold" : "font-normal"
+                // }`}
+                // onClick={() => setSelectedBtn(true)}
+                onClick={() => setSelected(!selected)}
+                value={cat.id}
+              >
+                {selected ? (
+                  <div className="flex items-center gap-2 mb-2">
+                    <GrView className="font-bold" />
+                    <span className="">{cat.category_name}</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 mb-2">
+                    <GrView />
+                    <span className="font-bold">{cat.category_name}</span>
+                  </div>
+                )}
+              </button>
+            </li>
           ))}
         </ul>
+        <button
+        // className={`border ${selectedBtn ? "font-bold" : "font-normal"}`}
+        // onClick={() => setSelectedBtn(true)}
+        ></button>
       </div>
     </div>
   );
