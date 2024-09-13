@@ -3,7 +3,7 @@ import { UserContext } from "../context/user-context";
 import { format } from "date-fns";
 import { CategoryContext } from "../context/category-context";
 
-const TableRow = ({ record, transactionData }) => {
+const TableRow = ({ record }) => {
   // const { user } = useContext(UserContext);
   const { searchValue } = useContext(CategoryContext);
   // const filteredData = transactionData.filter((data) =>
@@ -23,7 +23,7 @@ const TableRow = ({ record, transactionData }) => {
             </div>
           </div>
           <div className="text-base text-black">
-            <div className="">{record?.category_name}</div>
+            <div className="">{record?.name}</div>
             <div className="text-xs text-gray-500">
               {format(new Date(record.created_at), "yyyy-MM-dd")}
             </div>
