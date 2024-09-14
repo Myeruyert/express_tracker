@@ -12,6 +12,12 @@ export const CategoryProvider = ({ children }) => {
   const [searchValue, setSearchValue] = useState("");
   const { transactionData } = useContext(RecordContext);
 
+  // const sortingFunc = (a, b) => {
+  //   return a.amount - b.amount;
+  // };
+
+  // const sortedData = transactionData.sort(sortingFunc);
+
   const filteredData = transactionData.filter((data) =>
     data?.name.toLowerCase().includes(searchValue.toLowerCase())
   );

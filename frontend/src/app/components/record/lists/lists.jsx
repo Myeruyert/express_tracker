@@ -8,7 +8,7 @@ import { GrView } from "react-icons/gr";
 const Lists = () => {
   const { categories, getCategory } = useContext(CategoryContext);
   // const [selectedBtn, setSelectedBtn] = useState(false);
-  const [selected, setSelected] = useState(true);
+  const [selected, setSelected] = useState("");
   console.log("Show", selected);
   return (
     <div className="text-[#1F2937]">
@@ -49,28 +49,23 @@ const Lists = () => {
                 //   selectedBtn ? "font-bold" : "font-normal"
                 // }`}
                 // onClick={() => setSelectedBtn(true)}
-                onClick={() => setSelected(!selected)}
+                onClick={() => setSelected(cat?.category_name)}
                 value={cat.id}
               >
-                {selected ? (
-                  <div className="flex items-center gap-2 mb-2">
-                    <GrView className="font-bold" />
-                    <span className="">{cat.category_name}</span>
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 mb-2">
-                    <GrView />
-                    <span className="font-bold">{cat.category_name}</span>
-                  </div>
-                )}
+                <div className="flex items-center gap-2 mb-2">
+                  <GrView />
+                  <span
+                    className={`${
+                      selected === cat.category_name && "font-bold"
+                    }`}
+                  >
+                    {cat.category_name}
+                  </span>
+                </div>
               </button>
             </li>
           ))}
         </ul>
-        <button
-        // className={`border ${selectedBtn ? "font-bold" : "font-normal"}`}
-        // onClick={() => setSelectedBtn(true)}
-        ></button>
       </div>
     </div>
   );

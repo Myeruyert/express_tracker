@@ -1,15 +1,7 @@
-import React, { useContext, useState } from "react";
-import { UserContext } from "../context/user-context";
+import React from "react";
 import { format } from "date-fns";
-import { CategoryContext } from "../context/category-context";
 
 const TableRow = ({ record }) => {
-  // const { user } = useContext(UserContext);
-  const { searchValue } = useContext(CategoryContext);
-  // const filteredData = transactionData.filter((data) =>
-  //   data?.category_name.toLowerCase().includes(searchValue)
-  // );
-  // console.log("filteredData", filteredData);
   return (
     <>
       <td>

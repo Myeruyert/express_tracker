@@ -12,6 +12,7 @@ export const RecordProvider = ({ children }) => {
   const { user } = useContext(UserContext);
   const [transactionData, setTransactionData] = useState([]);
   const [sum, setSum] = useState(null);
+  const [sort, setSort] = useState("");
 
   const fetchSumData = async () => {
     try {
@@ -38,15 +39,31 @@ export const RecordProvider = ({ children }) => {
     }
   };
 
+  const handleSort = (e) => {
+    if (e.target.value === "Lowest first") {
+      console.log("first");
+      setTransactionData(transactionData.sort((a, b) => a.amount - b.amount));
+      console.log("transactionData sorted", transactionData);
+    }
+  };
+
   useEffect(() => {
     if (user && user.id) {
       fetchTransaction();
     }
-  }, [user.id]);
+  }, [user?.id]);
 
   return (
     <RecordContext.Provider
-      value={{ transactionData, fetchTransaction, sum, fetchSumData }}>
+      value={{
+        transactionData,
+        fetchTransaction,
+        sum,
+        fetchSumData,
+        setTransactionData,
+        handleSort,
+      }}
+    >
       {children}
     </RecordContext.Provider>
   );
