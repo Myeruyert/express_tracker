@@ -3,6 +3,7 @@ import { GrNext } from "react-icons/gr";
 import RecordHistory from "./recordHistory";
 import { useContext } from "react";
 import { RecordContext } from "../../context/userRecord-context";
+import { CategoryContext } from "../../context/category-context";
 
 const title = [{ title: "Today" }, { title: "Yesterday" }];
 
@@ -32,15 +33,13 @@ const RecordHistories = ({ transactionData }) => {
           className="select select-bordered w-full max-w-xs bg-[#F9FAFB]"
           onChange={handleSort}
         >
-          <option disabled selected>
-            Newest first
-          </option>
-          <option>Lowest first</option>
-          <option>Highest first</option>
+          <option value={0}>Newest first</option>
+          <option value={1}>Lowest first</option>
+          <option value={2}>Highest first</option>
         </select>
       </div>
       {title.map((title) => (
-        <RecordHistory title={title.title} transactionData={transactionData} />
+        <RecordHistory title={title.title} />
       ))}
     </div>
   );

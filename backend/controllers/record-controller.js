@@ -36,11 +36,24 @@ const getRecord = async (req, res) => {
       await sql`SELECT r.name, r.amount, r.transaction_type, r.created_at, c.name as category_name
     FROM records r INNER JOIN categories c ON r.cid=c.id WHERE r.uid=${id} ORDER BY created_at DESC;`;
     console.log("data", data);
-    res.status(200).json({ message: "Succeed", record: data });
+    res.status(200).json({ message: "Succeedeeeeed", record: data });
   } catch (error) {
     res.status(400).json({ message: "Not found user" });
   }
 };
+
+// const getIncRecord = async (req, res) => {
+//   console.log("summ");
+//   try {
+//     const data =
+//       await sql`SELECT r.name, r.amount, r.transaction_type, r.created_at, c.name as category_name
+//     FROM records r INNER JOIN categories c ON r.cid=c.id WHERE transaction_type='INC' ORDER BY created_at DESC;`;
+//     console.log("data", data);
+//     res.status(200).json({ message: "Succeedeeeeed", record: data });
+//   } catch (error) {
+//     res.status(400).json({ message: "Not found user" });
+//   }
+// };
 
 const getSumRecord = async (req, res) => {
   try {
@@ -94,6 +107,7 @@ const updateRecord = async (req, res) => {
 
 module.exports = {
   getRecord,
+  // getIncRecord,
   getDonutChartData,
   getBarChartData,
   getSumRecord,

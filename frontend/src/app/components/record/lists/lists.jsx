@@ -4,12 +4,17 @@ import React, { useContext, useState } from "react";
 import CategoryList from "./categoryList";
 import { CategoryContext } from "../../context/category-context";
 import { GrView } from "react-icons/gr";
+import { RecordContext } from "../../context/userRecord-context";
 
 const Lists = () => {
-  const { categories, getCategory } = useContext(CategoryContext);
+  const { categories } = useContext(CategoryContext);
+  const { sortedByType } = useContext(RecordContext);
   // const [selectedBtn, setSelectedBtn] = useState(false);
   const [selected, setSelected] = useState("");
-  console.log("Show", selected);
+  const [type, setType] = useState({
+    transaction_type: "",
+  });
+  console.log("Show", type);
   return (
     <div className="text-[#1F2937]">
       <div className="my-6 text-base">
@@ -25,11 +30,23 @@ const Lists = () => {
             <span>All</span>
           </li>
           <li className="flex items-center gap-2">
-            <input type="radio" name="radio-1" className="radio radio-xs" />
+            <input
+              type="radio"
+              name="radio-1"
+              className="radio radio-xs"
+              value={"INC"}
+              onChange={sortedByType}
+            />
             <span>Income</span>
           </li>
           <li className="flex items-center gap-2">
-            <input type="radio" name="radio-1" className="radio radio-xs" />
+            <input
+              type="radio"
+              name="radio-1"
+              className="radio radio-xs"
+              value={"EXP"}
+              onChange={sortedByType}
+            />
             <span>Expense</span>
           </li>
         </ul>

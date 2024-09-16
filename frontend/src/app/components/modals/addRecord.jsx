@@ -6,6 +6,7 @@ import { FiPlus } from "react-icons/fi";
 import { toast } from "react-toastify";
 import { CategoryContext } from "../context/category-context";
 import { UserContext } from "../context/user-context";
+import { RecordContext } from "../context/userRecord-context";
 
 const AddRecordModal = ({ isOpen, close }) => {
   const { user } = useContext(UserContext);
@@ -15,7 +16,9 @@ const AddRecordModal = ({ isOpen, close }) => {
     name: "",
     amount: 0,
     cid: "",
+    uid: "",
   });
+  const { refetch, setRefetch } = useContext(RecordContext);
 
   const addRecord = async () => {
     const body = {
@@ -27,12 +30,13 @@ const AddRecordModal = ({ isOpen, close }) => {
       description: "description",
       // created_at: new Date(createdAt),
     };
-    console.log("BODY", body);
+    // console.log("BODY", body);
     try {
       const res = await axios.post(`${apiUrl}/records`, body);
       if (res.status === 200) {
-        // console.log("addRecord", res.data);
+        // console.log("ADDRECORD", res.data);
         toast.success("Record added successfully");
+        setRefetch(!refetch);
       }
     } catch (error) {
       console.log("addRecord error", error);
@@ -45,8 +49,8 @@ const AddRecordModal = ({ isOpen, close }) => {
     setCreateRecord({ ...createRecord, cid: ev.target.value });
   };
 
-  console.log(createRecord);
-  console.log("uid", user.id);
+  // console.log(createRecord);
+  // console.log("uid", user.id);
 
   useEffect(() => {
     getCategory();
@@ -144,13 +148,16 @@ const AddRecordModal = ({ isOpen, close }) => {
             </button>
           </div>
           <div className="flex-1">
-            Payee
+            Name
             <input
               type="text"
-              placeholder="Payee"
+              placeholder="Name"
               className="input input-bordered w-full max-w-xs mb-4"
+              onChange={(e) => {
+                setCreateRecord({ ...createRecord, name: e.target.value });
+              }}
             />
-            Note
+            Description
             <textarea
               className="textarea textarea-bordered w-full"
               placeholder="Write here"

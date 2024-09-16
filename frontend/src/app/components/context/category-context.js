@@ -9,8 +9,8 @@ export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState(null);
-  const [searchValue, setSearchValue] = useState("");
-  const { transactionData } = useContext(RecordContext);
+  // const [searchValue, setSearchValue] = useState("");
+  const { transactionData, refetch, setRefetch } = useContext(RecordContext);
 
   // const sortingFunc = (a, b) => {
   //   return a.amount - b.amount;
@@ -18,9 +18,9 @@ export const CategoryProvider = ({ children }) => {
 
   // const sortedData = transactionData.sort(sortingFunc);
 
-  const filteredData = transactionData.filter((data) =>
-    data?.name.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  // const filteredData = transactionData.filter((data) =>
+  //   data?.name.toLowerCase().includes(searchValue.toLowerCase())
+  // );
 
   const getCategory = async () => {
     try {
@@ -33,11 +33,20 @@ export const CategoryProvider = ({ children }) => {
     }
   };
 
+  // const handleSort = (e) => {
+  //   if (e.target.value === "Lowest first") {
+  //     console.log("first");
+  //     filteredData.sort((a, b) => a.amount - b.amount);
+  //     console.log("transactionData sorted", filteredData);
+  //     setRefetch(!refetch);
+  //   }
+  // };
+
   useEffect(() => {
     getCategory();
   }, []);
 
-  console.log("CAT", categories);
+  // console.log("CAT", categories);
 
   return (
     <CategoryContext.Provider
@@ -45,9 +54,10 @@ export const CategoryProvider = ({ children }) => {
         categories,
         getCategory,
         setCategories,
-        searchValue,
-        setSearchValue,
-        filteredData,
+        // searchValue,
+        // setSearchValue,
+        // filteredData,
+        // handleSort,
       }}
     >
       {children}

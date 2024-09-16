@@ -5,28 +5,29 @@ import Lists from "./lists/lists";
 import AddRecordModal from "../modals/addRecord";
 import AddCategory from "../modals/addCategory";
 import { CategoryContext } from "../context/category-context";
+import { RecordContext } from "../context/userRecord-context";
 
 const Aside = ({ search }) => {
-  const { setSearchValue } = useContext(CategoryContext);
+  const { setSearchValue } = useContext(RecordContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const show = () => {
     setIsOpen(true);
-    console.log("Show", isOpen);
+    // console.log("Show", isOpen);
   };
   const hide = () => {
     setIsOpen(false);
-    console.log("Show", isOpen);
+    // console.log("Show", isOpen);
   };
 
   const [isOpenCat, setIsOpenCat] = useState(false);
   const open = () => {
     setIsOpenCat(true);
-    console.log("Show", isOpenCat);
+    // console.log("Show", isOpenCat);
   };
   const close = () => {
     setIsOpenCat(false);
-    console.log("Show", isOpenCat);
+    // console.log("Show", isOpenCat);
   };
 
   const searchHandleCahnge = (e) => {

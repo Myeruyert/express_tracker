@@ -7,6 +7,7 @@ import { apiUrl } from "@/utils/util";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const [refetch, setRefetch] = useState(false);
   const [user, setUser] = useState({
     userId: "",
     name: "",
@@ -27,6 +28,7 @@ export const UserProvider = ({ children }) => {
         const { user } = response.data;
         console.log("USER", user);
         setUser(user);
+        setRefetch(!refetch);
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
