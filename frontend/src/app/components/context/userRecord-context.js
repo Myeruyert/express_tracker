@@ -15,17 +15,8 @@ export const RecordProvider = ({ children }) => {
   const [sum, setSum] = useState(null);
   const [refetch, setRefetch] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  // const [incData, setIncData] = useState(null);
-
-  // const fetchIncData = async () => {
-  //   try {
-  //     const res = await axios.get(`${apiUrl}/records/inc`);
-  //     setIncData(res.data.record);
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Failed to fetch chart data");
-  //   }
-  // };
+  const [incValue, setIncValue] = useState("");
+  const [expValue, setExpValue] = useState("");
 
   const fetchSumData = async () => {
     try {
@@ -44,9 +35,10 @@ export const RecordProvider = ({ children }) => {
         const { record } = res.data;
         setTransactionData(record);
         setFilteredData(record);
+        setExpValue(record);
+        setIncValue(record);
         // console.log("RECORD", record);
       }
-
       // console.log("res.data", transactionData);
     } catch (error) {
       console.log(error);
@@ -61,11 +53,20 @@ export const RecordProvider = ({ children }) => {
     setFilteredData(filtered);
   };
 
-  const filteredByType = () => {
-    const filtered = transactionData.filter((data) =>
-      data?.transactionData.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredByInc = () => {
+    const filteredInc = transactionData.filter((data) =>
+      data?.transaction_type.includes("INC")
     );
-    setFilteredData(filtered);
+    setFilteredData(filteredInc);
+    console.log("filterByInc", filteredInc);
+  };
+
+  const filteredByExp = () => {
+    const filteredExp = transactionData.filter((data) =>
+      data?.transaction_type.includes("EXP")
+    );
+    setFilteredData(filteredExp);
+    console.log("filterByExp", filteredExp);
   };
 
   const handleSort = (e) => {
@@ -83,12 +84,6 @@ export const RecordProvider = ({ children }) => {
     }
   };
 
-  // const sortedByType = () => {
-  //   if (e.target.value === "INC") {
-  //     fetchIncData();
-  //   }
-  // };
-
   useEffect(() => {
     if (user && user.id) {
       fetchTransaction();
@@ -97,10 +92,16 @@ export const RecordProvider = ({ children }) => {
 
   useEffect(() => {
     filterFunc();
-    // fetchIncData();
+    // filteredByInc();
+    // filteredByExp();
   }, [searchValue]);
 
-  // console.log("IncData", incData);
+  useEffect(() => {
+    filteredByInc();
+    filteredByExp();
+  }, []);
+
+  console.log("filteredData", filteredData);
 
   return (
     <RecordContext.Provider
@@ -116,9 +117,11 @@ export const RecordProvider = ({ children }) => {
         setRefetch,
         searchValue,
         setSearchValue,
-        // sortedByType,
-      }}
-    >
+        setIncValue,
+        setExpValue,
+        filteredByExp,
+        filteredByInc,
+      }}>
       {children}
     </RecordContext.Provider>
   );

@@ -8,13 +8,19 @@ import { RecordContext } from "../../context/userRecord-context";
 
 const Lists = () => {
   const { categories } = useContext(CategoryContext);
-  const { sortedByType } = useContext(RecordContext);
+  const { filteredByExp, filteredByInc } = useContext(RecordContext);
   // const [selectedBtn, setSelectedBtn] = useState(false);
   const [selected, setSelected] = useState("");
-  const [type, setType] = useState({
-    transaction_type: "",
-  });
-  console.log("Show", type);
+  // const [type, setType] = useState({
+  //   transaction_type: "",
+  // });
+  // const filterByExp = (e) => {
+  //   setExpValue(e.target.value);
+  // };
+  // const filterByInc = (e) => {
+  //   setIncValue(e.target.value);
+  // };
+  // console.log("Show", type);
   return (
     <div className="text-[#1F2937]">
       <div className="my-6 text-base">
@@ -35,7 +41,7 @@ const Lists = () => {
               name="radio-1"
               className="radio radio-xs"
               value={"INC"}
-              onChange={sortedByType}
+              onChange={filteredByInc}
             />
             <span>Income</span>
           </li>
@@ -45,7 +51,7 @@ const Lists = () => {
               name="radio-1"
               className="radio radio-xs"
               value={"EXP"}
-              onChange={sortedByType}
+              onChange={filteredByExp}
             />
             <span>Expense</span>
           </li>
@@ -67,15 +73,13 @@ const Lists = () => {
                 // }`}
                 // onClick={() => setSelectedBtn(true)}
                 onClick={() => setSelected(cat?.category_name)}
-                value={cat.id}
-              >
+                value={cat.id}>
                 <div className="flex items-center gap-2 mb-2">
                   <GrView />
                   <span
                     className={`${
                       selected === cat.category_name && "font-bold"
-                    }`}
-                  >
+                    }`}>
                     {cat.category_name}
                   </span>
                 </div>

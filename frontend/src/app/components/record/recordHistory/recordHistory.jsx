@@ -4,7 +4,7 @@ import { RecordContext } from "../../context/userRecord-context";
 import { CategoryContext } from "../../context/category-context";
 
 const RecordHistory = ({ title }) => {
-  const { filteredData } = useContext(RecordContext);
+  const { filteredData, incValue } = useContext(RecordContext);
   // console.log("sorted data", transactionData);
 
   return (
