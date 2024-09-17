@@ -69,6 +69,10 @@ export const RecordProvider = ({ children }) => {
     console.log("filterByExp", filteredExp);
   };
 
+  const selectAll = () => {
+    fetchTransaction();
+  };
+
   const handleSort = (e) => {
     console.log("SORT", e.target.value);
     if (e.target.value === "0") {
@@ -121,7 +125,9 @@ export const RecordProvider = ({ children }) => {
         setExpValue,
         filteredByExp,
         filteredByInc,
-      }}>
+        selectAll,
+      }}
+    >
       {children}
     </RecordContext.Provider>
   );

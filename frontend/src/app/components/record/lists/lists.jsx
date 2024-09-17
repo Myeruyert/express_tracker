@@ -8,7 +8,7 @@ import { RecordContext } from "../../context/userRecord-context";
 
 const Lists = () => {
   const { categories } = useContext(CategoryContext);
-  const { filteredByExp, filteredByInc } = useContext(RecordContext);
+  const { filteredByExp, filteredByInc, selectAll } = useContext(RecordContext);
   // const [selectedBtn, setSelectedBtn] = useState(false);
   const [selected, setSelected] = useState("");
   // const [type, setType] = useState({
@@ -32,6 +32,8 @@ const Lists = () => {
               name="radio-1"
               className="radio radio-xs"
               defaultChecked
+              value={"All"}
+              onChange={selectAll}
             />
             <span>All</span>
           </li>
@@ -73,13 +75,15 @@ const Lists = () => {
                 // }`}
                 // onClick={() => setSelectedBtn(true)}
                 onClick={() => setSelected(cat?.category_name)}
-                value={cat.id}>
+                value={cat.id}
+              >
                 <div className="flex items-center gap-2 mb-2">
                   <GrView />
                   <span
                     className={`${
                       selected === cat.category_name && "font-bold"
-                    }`}>
+                    }`}
+                  >
                     {cat.category_name}
                   </span>
                 </div>
