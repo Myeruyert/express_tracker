@@ -46,7 +46,7 @@ const Charts = () => {
 
   return (
     <>
-      <div className="stats text-primary-content w-1/2 h-72 bg-white flex flex-col my-6">
+      <div className="stats text-primary-content w-1/2 h-full bg-white flex flex-col my-6">
         {/* <div>
           RES
           {barChartData?.map((res) => res.total_inc)}
@@ -85,7 +85,7 @@ const Charts = () => {
           </div>
         </div>
       </div>
-      <div className="stats text-primary-content w-1/2 h-72 bg-white flex flex-col my-6">
+      <div className="stats text-primary-content w-1/2 h-full bg-white flex flex-col my-6">
         <div className="stat-title flex gap-2 items-center border-b-2 py-4 px-6">
           <span className="text-slate-900 text-base font-semibold">
             Income - Expense

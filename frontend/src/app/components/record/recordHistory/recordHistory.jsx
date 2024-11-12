@@ -13,7 +13,7 @@ const RecordHistory = ({ title }) => {
       <table className="table">
         <tbody className="my-3">
           {filteredData?.map((record) => (
-            <tr className="flex items-center justify-between border-[#E5E7EB] bg-white rounded-xl border-slate-300 my-3">
+            <tr className="flex items-center justify-between border-[#E5E7EB] bg-white rounded-xl  my-3">
               <TableRow record={record} />
             </tr>
           ))}
