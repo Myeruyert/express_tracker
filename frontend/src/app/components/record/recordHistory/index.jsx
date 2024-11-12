@@ -5,7 +5,10 @@ import { useContext } from "react";
 import { RecordContext } from "../../context/userRecord-context";
 import { CategoryContext } from "../../context/category-context";
 
-const title = [{ title: "Today" }, { title: "Yesterday" }];
+const title = [
+  { title: "Today" },
+  // { title: "Yesterday" }
+];
 
 const RecordHistories = ({ transactionData }) => {
   const { handleSort } = useContext(RecordContext);
@@ -31,8 +34,7 @@ const RecordHistories = ({ transactionData }) => {
         </div>
         <select
           className="select select-bordered w-full max-w-xs bg-[#F9FAFB]"
-          onChange={handleSort}
-        >
+          onChange={handleSort}>
           <option value={0}>Newest first</option>
           <option value={1}>Lowest first</option>
           <option value={2}>Highest first</option>
