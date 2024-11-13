@@ -1,24 +1,18 @@
 const { Router } = require("express");
+const { auth } = require("../middlewares/auth");
 const {
-  getRecord,
-  // getIncRecord,
-  getDonutChartData,
-  getBarChartData,
-  getSumRecord,
+  // getAllRecords,
   createRecord,
-  updateRecord,
   deleteRecord,
+  updateRecord,
+  getRecordSum,
+  getRecord,
 } = require("../controllers/record-controller");
-// const { auth } = require("../middlewares/auth");
 
 const router = Router();
 
-// router.get();
-router.route("/sum").get(getSumRecord);
-router.route("/donutchart").get(getDonutChartData);
-router.route("/barchart").get(getBarChartData);
-// router.route("/inc").get(getIncRecord);
-router.route("/").post(createRecord);
-router.route("/:id").get(getRecord).put(updateRecord).delete(deleteRecord);
+router.get("/sum", auth, getRecordSum);
+router.route("/:id").get(getRecord).delete(deleteRecord).put(updateRecord);
+router.post("/", createRecord);
 
 module.exports = router;

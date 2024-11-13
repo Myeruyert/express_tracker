@@ -20,11 +20,39 @@ export const RecordProvider = ({ children }) => {
 
   const fetchSumData = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/records/sum`);
-      setSum(response.data);
-      // console.log("SUM", response.data);
+      const token = localStorage.getItem("token");
+      console.log("Fetching sum data with token:", token);
+
+      const response = await axios.get(`${apiUrl}/records/sum`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("Sum data response:", response.data);
+
+      if (response.data.message === "success") {
+        setSum({
+          expense: response.data.expense,
+          income: response.data.income,
+        });
+      }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      console.error("Error fetching sum data:", error);
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error("Error response:", error.response.data);
+        toast.error(error.response.data.message || "Failed to fetch sum data");
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error("No response received");
+        toast.error("Server not responding");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error setting up request:", error.message);
+        toast.error("Error setting up request");
+      }
     }
   };
 
@@ -105,6 +133,12 @@ export const RecordProvider = ({ children }) => {
     filteredByExp();
   }, []);
 
+  useEffect(() => {
+    if (user && user.id) {
+      fetchSumData();
+    }
+  }, [user?.id]);
+
   console.log("filteredData", filteredData);
 
   return (
@@ -126,8 +160,7 @@ export const RecordProvider = ({ children }) => {
         filteredByExp,
         filteredByInc,
         selectAll,
-      }}
-    >
+      }}>
       {children}
     </RecordContext.Provider>
   );

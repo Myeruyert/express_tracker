@@ -55,14 +55,35 @@ const getRecord = async (req, res) => {
 //   }
 // };
 
-const getSumRecord = async (req, res) => {
+const getRecordSum = async (req, res) => {
   try {
-    const [income, expense] =
-      await sql`SELECT transaction_type, SUM(amount) FROM records GROUP BY transaction_type`;
-    res.status(200).json({ income, expense });
-    console.log("incme", income);
+    const { id } = req.user;
+    console.log("Calculating sum for user:", id);
+
+    // Get expense sum - using uid instead of user_id
+    const [expense] = await sql`
+      SELECT COALESCE(SUM(amount), 0) as sum 
+      FROM records 
+      WHERE uid=${id} AND transaction_type='EXP'
+    `;
+
+    // Get income sum
+    const [income] = await sql`
+      SELECT COALESCE(SUM(amount), 0) as sum 
+      FROM records 
+      WHERE uid=${id} AND transaction_type='INC'
+    `;
+
+    console.log("Sums calculated:", { expense, income });
+
+    res.status(200).json({
+      message: "success",
+      expense,
+      income,
+    });
   } catch (error) {
-    res.status(400).json({ message: "failded", error });
+    console.error("Error in getRecordSum:", error);
+    res.status(400).json({ message: "Error getting sum" });
   }
 };
 
@@ -110,7 +131,7 @@ module.exports = {
   // getIncRecord,
   getDonutChartData,
   getBarChartData,
-  getSumRecord,
+  getRecordSum,
   createRecord,
   updateRecord,
   deleteRecord,
