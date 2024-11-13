@@ -3,28 +3,44 @@ const sql = require("../config/db");
 
 const getDonutChartData = async (req, res) => {
   try {
-    const data =
-      await sql`SELECT c.name AS categoryname, SUM(r.amount) AS sumamount FROM records r INNER JOIN categories c ON r.cid=c.id WHERE r.transaction_type='EXP' GROUP BY(c.name);`;
-    console.log("categories", data);
+    const { id } = req.user;
+    const data = await sql`
+      SELECT 
+        c.name AS categoryname, 
+        SUM(r.amount) AS sumamount 
+      FROM records r 
+      INNER JOIN categories c ON r.cid=c.id 
+      WHERE r.transaction_type='EXP' AND r.uid=${id}
+      GROUP BY c.name;
+    `;
+
+    console.log("Donut chart data:", data);
     res.status(200).json({ message: "success", data });
   } catch (error) {
-    res.status(400).json({ message: "Not found user" });
+    console.error("Error in getDonutChartData:", error);
+    res.status(400).json({ message: "Failed to get chart data" });
   }
 };
 
 const getBarChartData = async (req, res) => {
   try {
-    const data = await sql`SELECT 
-      TO_CHAR(DATE_TRUNC('month', r.created_at), 'Mon') AS month, 
-      SUM(CASE WHEN r.transaction_type='INC' THEN r.amount ELSE 0 END) as total_inc,
-      SUM(CASE WHEN r.transaction_type='EXP' THEN r.amount ELSE 0 END) as total_exp
+    const { id } = req.user;
+    const data = await sql`
+      SELECT 
+        TO_CHAR(DATE_TRUNC('month', r.created_at), 'Mon') AS month, 
+        SUM(CASE WHEN r.transaction_type='INC' THEN r.amount ELSE 0 END) as total_inc,
+        SUM(CASE WHEN r.transaction_type='EXP' THEN r.amount ELSE 0 END) as total_exp
       FROM records r
+      WHERE r.uid=${id}
       GROUP BY DATE_TRUNC('month', r.created_at)
-      ORDER BY DATE_TRUNC('month', r.created_at);`;
-    console.log("barchart", data);
+      ORDER BY DATE_TRUNC('month', r.created_at);
+    `;
+
+    console.log("Bar chart data:", data);
     res.status(200).json({ message: "success", data });
   } catch (error) {
-    res.status(400).json({ message: "Not found user" });
+    console.error("Error in getBarChartData:", error);
+    res.status(400).json({ message: "Failed to get chart data" });
   }
 };
 

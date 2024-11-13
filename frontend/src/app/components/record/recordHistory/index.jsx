@@ -24,13 +24,13 @@ const RecordHistories = ({ transactionData }) => {
     <div className="text-[#1F2937] w-full">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4 text-base">
-          <button className="btn btn-square bg-[#E5E7EB] border-0">
+          {/* <button className="btn btn-square bg-[#E5E7EB] border-0">
             <GrPrevious className="text-[#1F2937]" />
-          </button>
-          <p>Last 30 days</p>
-          <button className="btn btn-square bg-[#E5E7EB] border-0">
+          </button> */}
+          <p>All records</p>
+          {/* <button className="btn btn-square bg-[#E5E7EB] border-0">
             <GrNext className="text-[#1F2937]" />
-          </button>
+          </button> */}
         </div>
         <select
           className="select select-bordered w-full max-w-xs bg-[#F9FAFB]"

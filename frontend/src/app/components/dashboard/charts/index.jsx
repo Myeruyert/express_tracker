@@ -12,45 +12,47 @@ ChartJS.register(Colors, Legend);
 const Charts = () => {
   const [donChartData, setDonChartData] = useState(null);
   const [barChartData, setBarChartData] = useState(null);
-  const [res, setRes] = useState([]);
 
   const donutChartData = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/records/donutchart`);
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${apiUrl}/records/donutchart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setDonChartData(res.data.data);
-      console.log("D.Chart", donChartData);
+      console.log("D.Chart", res.data.data);
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to fetch chart data");
+      console.error("Donut chart error:", error);
+      toast.error("Failed to fetch donut chart data");
     }
   };
 
   const barChart = async () => {
     try {
-      const res = await axios.get(`${apiUrl}/records/barchart`);
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${apiUrl}/records/barchart`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setBarChartData(res.data.data);
-      console.log("B.Chart", barChartData);
+      console.log("B.Chart", res.data.data);
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to fetch chart data");
+      console.error("Bar chart error:", error);
+      toast.error("Failed to fetch bar chart data");
     }
   };
 
   useEffect(() => {
     donutChartData();
     barChart();
-    // substraction();
   }, []);
-  console.log("D.Chart", donChartData);
-  console.log("B.Chart", barChartData);
 
   return (
     <>
       <div className="stats text-primary-content w-1/2 h-full bg-white flex flex-col my-6">
-        {/* <div>
-          RES
-          {barChartData?.map((res) => res.total_inc)}
-        </div> */}
         <div className="stat-title flex gap-2 items-center border-b-2 py-4 px-6">
           <span className="text-slate-900 text-base font-semibold">
             Income - Expense

@@ -37,8 +37,22 @@ const AddRecordModal = ({ isOpen, close }) => {
       const res = await axios.post(`${apiUrl}/records`, body);
       if (res.status === 200) {
         // console.log("ADDRECORD", res.data);
+
         toast.success("Record added successfully");
         setRefetch(!refetch);
+
+        // Reset form
+        setCreateRecord({
+          transaction_type: "",
+          name: "",
+          amount: 0,
+          cid: "",
+          uid: "",
+          createdAt: Date,
+        });
+
+        // Close modal
+        close();
       }
     } catch (error) {
       console.log("addRecord error", error);
