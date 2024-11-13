@@ -17,8 +17,10 @@ const AddRecordModal = ({ isOpen, close }) => {
     amount: 0,
     cid: "",
     uid: "",
+    createdAt: Date,
   });
   const { refetch, setRefetch } = useContext(RecordContext);
+  console.log("createRecord", createRecord);
 
   const addRecord = async () => {
     const body = {
@@ -28,7 +30,7 @@ const AddRecordModal = ({ isOpen, close }) => {
       amount: createRecord.amount,
       transaction_type: createRecord.transaction_type,
       description: "description",
-      // created_at: new Date(createdAt),
+      created_at: createRecord.createdAt,
     };
     // console.log("BODY", body);
     try {
@@ -62,8 +64,7 @@ const AddRecordModal = ({ isOpen, close }) => {
         <form method="dialog">
           <button
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-            onClick={close}
-          >
+            onClick={close}>
             ✕
           </button>
         </form>
@@ -79,8 +80,7 @@ const AddRecordModal = ({ isOpen, close }) => {
                 }`}
                 onClick={() =>
                   setCreateRecord({ ...createRecord, transaction_type: "EXP" })
-                }
-              >
+                }>
                 Expense
               </button>
               <button
@@ -91,8 +91,7 @@ const AddRecordModal = ({ isOpen, close }) => {
                 }`}
                 onClick={() =>
                   setCreateRecord({ ...createRecord, transaction_type: "INC" })
-                }
-              >
+                }>
                 Income
               </button>
             </div>
@@ -108,8 +107,7 @@ const AddRecordModal = ({ isOpen, close }) => {
             Category
             <select
               className="select select-bordered w-full max-w-xs mb-4"
-              onChange={choiceCat}
-            >
+              onChange={choiceCat}>
               <option disabled selected>
                 Choose
               </option>
@@ -119,20 +117,23 @@ const AddRecordModal = ({ isOpen, close }) => {
             </select>
             <div className="flex gap-2">
               <input
-                className="input input-bordered w-1/2"
+                className="input input-bordered w-full"
                 type="date"
                 name="Date"
                 placeholder="Date"
                 onChange={(e) => {
-                  setCreatedAt(e.target.value);
+                  setCreateRecord({
+                    ...createRecord,
+                    createdAt: e.target.value,
+                  });
                 }}
               />
-              <input
+              {/* <input
                 className="input input-bordered w-1/2 max-w-xs"
                 type="datetime"
                 name="datetime"
                 id=""
-              />
+              /> */}
             </div>
             <button
               className={`btn btn-sm rounded-3xl border-0 text-base text-white font-normal my-6
@@ -141,8 +142,7 @@ const AddRecordModal = ({ isOpen, close }) => {
                   ? "bg-[#0166FF]"
                   : "bg-[#16A34A]"
               }`}
-              onClick={addRecord}
-            >
+              onClick={addRecord}>
               <FiPlus className="text-2xl" />
               <span>Add</span>
             </button>
@@ -160,8 +160,7 @@ const AddRecordModal = ({ isOpen, close }) => {
             Description
             <textarea
               className="textarea textarea-bordered w-full"
-              placeholder="Write here"
-            ></textarea>
+              placeholder="Write here"></textarea>
           </div>
         </div>
       </div>
